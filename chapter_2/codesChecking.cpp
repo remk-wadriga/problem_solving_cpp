@@ -1,163 +1,75 @@
-/* Prints something like this:
-* ###
-* ##
-* #
-*/
-void printHalfOfSquareRight1(int size)
+#include <iostream>
+#include "../lib/Numeral.cpp"
+
+int calculateDoubleSumValue(int number)
 {
-    using namespace std;
-    for (int row = size; row > 0; row--) {
-        for (int line = 0; line < row; line++) {
-            cout << "#";
-        }
-        cout << "\n";
-    }
+    number *= 2;
+    return number > 9 ? 1 + number % 10 : number;
 }
 
-/* Prints something like this:
-* ###
-*  ##
-*   #
-*/
-void printHalfOfSquareLeft1(int size)
+bool luhnCheckCodeSumInt(int code)
 {
     using namespace std;
-    for (int row = 0; row < size; row++) {
-    	for (int spaces = 0; spaces < row; spaces++) {
-    		cout << " ";
-    	}
-    	for (int grids = 0; grids < size - row; grids++) {
-            cout << "#";
+    int step = 0;
+    int checkSum = 0;
+
+    Numeral numeralCode = Numeral(code);
+
+    for (int num : numeralCode.getNumbers()) {
+        if (step % 2 == 1 && step + 1 < numeralCode.size()) {
+            checkSum += calculateDoubleSumValue(num);
+        } else {
+            checkSum += num;
         }
-    	cout << "\n";
+        step++;
     }
+
+    return checkSum % 10 == 0;
 }
 
-/* Prints something like this:
-* #
-* ##
-* ###
-*/
-void printHalfOfSquareRight2(int size)
+bool luhnCheckCodeSumString()
 {
     using namespace std;
-    for (int row = 1; row <= size; row++) {
-    	for (int line = 0; line < row; line++) {
-    		cout << "#";
-    	}
-    	cout << "\n";
-    }
-}
+    char num;
+    int checkSumForEven = 0;
+    int checkSumForOdd = 0;
+    int step = 0;
 
-/* Prints something like this:
-*   #
-*  ##
-* ###
-*/
-void printHalfOfSquareLeft2(int size)
-{
-    using namespace std;
-    for (int row = 1; row <= size; row++) {
-    	for (int spaces = 0; spaces < size - row; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < row; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
+    cout << "Enter a number: \n";
+    cout << "> ";
+    num = cin.get();
+    while (num != 10) {
+        int number = num - '0';
+        checkSumForEven += step % 2 == 0 ? calculateDoubleSumValue(number) : number;
+        checkSumForOdd += step % 2 == 1 ? calculateDoubleSumValue(number) : number;
+        num = cin.get();
+        step++;
     }
+
+    // The last step - it's not a number, it's an end of line
+    int checkSum = (step - 1) % 2 ? checkSumForEven : checkSumForOdd;
+    cout << "Sum: " << checkSum << "\n";
+    return checkSum % 10 == 0;
 }
 
 
-/** Prints something like this:
-* #
-* ##
-* ###
-* ##
-* #
-*/
-void printTriangleRight(int size)
+void calculatePositiveAndNegativeNumbers()
 {
-    using namespace std;
-    int doubleSze = size*2;
+    int positiveCount = 0;
+    int negativeCount = 0;
+    int number;
 
-    for (int row = 1; row < doubleSze; row++) {
-        //int rowLength = row <= size ? row : doubleSze - row;
-        int rowLength = size - abs(size - row);
-        for (int line = 0; line < rowLength; line++) {
-            cout << "#";
+    cout << "Print some number" << "\n";
+    for (int i = 0; i < 5; i++) {
+        cout << "> ";
+    	cin >> number;
+        if (number > 0) {
+            positiveCount++;
+        } else if (number < 0) {
+            negativeCount++;
         }
-        cout << "\n";
     }
-}
 
-/** Prints something like this:
-*   #
-*  ##
-* ###
-*  ##
-*   #
-*/
-void printTriangleLeft(int size)
-{
-    using namespace std;
-    int doubleSze = size * 2;
-    for (int row = 1; row < doubleSze; row++) {
-    	int spacesCount = abs(size - row);
-        int gridsCount = size - spacesCount;
-        for (int spaces = 0; spaces < spacesCount; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < gridsCount; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
-    }
-}
-
-/** Prints something like this:
-*    #
-*   ###
-*  #####
-*/
-void printTriangleTop(int size)
-{
-    using namespace std;
-    int rest = size % 2;
-    int height = size / 2 + rest;
-
-    for (int row = 1; row <= height; row++) {
-    	int spacesCount = height - row;
-        int gridsCount = row * 2 - rest;
-        for (int spaces = 0; spaces < spacesCount; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < gridsCount; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
-    }
-}
-
-/** Prints something like this:
-*  #####
-*   ###
-*    #
-*/
-void printTriangleDown(int size)
-{
-    using namespace std;
-    int height = size / 2 + size % 2;
-
-    for (int row = 0; row < height; row++) {
-        int spacesCount = row;
-        int gridsCount = size - row * 2;
-        for (int spaces = 0; spaces < spacesCount; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < gridsCount; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
-    }
+    cout << "Positive numbers count: " << positiveCount << "\n";
+    cout << "Negative numbers count: " << negativeCount << "\n";
 }
