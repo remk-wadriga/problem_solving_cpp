@@ -3,7 +3,7 @@
 * ##
 * #
 */
-void print_half_of_square_right_1(int size)
+void printHalfOfSquareRight1(int size)
 {
     using namespace std;
     for (int row = size; row > 0; row--) {
@@ -19,7 +19,7 @@ void print_half_of_square_right_1(int size)
 *  ##
 *   #
 */
-void print_half_of_square_left_1(int size)
+void printHalfOfSquareLeft1(int size)
 {
     using namespace std;
     for (int row = 0; row < size; row++) {
@@ -38,7 +38,7 @@ void print_half_of_square_left_1(int size)
 * ##
 * ###
 */
-void print_half_of_square_right_2(int size)
+void printHalfOfSquareRight2(int size)
 {
     using namespace std;
     for (int row = 1; row <= size; row++) {
@@ -54,7 +54,7 @@ void print_half_of_square_right_2(int size)
 *  ##
 * ###
 */
-void print_half_of_square_left_2(int size)
+void printHalfOfSquareLeft2(int size)
 {
     using namespace std;
     for (int row = 1; row <= size; row++) {
@@ -76,15 +76,15 @@ void print_half_of_square_left_2(int size)
 * ##
 * #
 */
-void print_triangle_right(int size)
+void printTriangleRight(int size)
 {
     using namespace std;
-    int double_size = size*2;
+    int doubleSze = size*2;
 
-    for (int row = 1; row < double_size; row++) {
-        //int row_length = row <= size ? row : double_size - row;
-        int row_length = size - abs(size - row);
-        for (int line = 0; line < row_length; line++) {
+    for (int row = 1; row < doubleSze; row++) {
+        //int rowLength = row <= size ? row : doubleSze - row;
+        int rowLength = size - abs(size - row);
+        for (int line = 0; line < rowLength; line++) {
             cout << "#";
         }
         cout << "\n";
@@ -98,17 +98,17 @@ void print_triangle_right(int size)
 *  ##
 *   #
 */
-void print_triangle_left(int size)
+void printTriangleLeft(int size)
 {
     using namespace std;
-    int double_size = size * 2;
-    for (int row = 1; row < double_size; row++) {
-    	int spaces_count = abs(size - row);
-        int grids_count = size - spaces_count;
-        for (int spaces = 0; spaces < spaces_count; spaces++) {
+    int doubleSze = size * 2;
+    for (int row = 1; row < doubleSze; row++) {
+    	int spacesCount = abs(size - row);
+        int gridsCount = size - spacesCount;
+        for (int spaces = 0; spaces < spacesCount; spaces++) {
             cout << " ";
         }
-        for (int grids = 0; grids < grids_count; grids++) {
+        for (int grids = 0; grids < gridsCount; grids++) {
             cout << "#";
         }
         cout << "\n";
@@ -120,19 +120,19 @@ void print_triangle_left(int size)
 *   ###
 *  #####
 */
-void print_triangle_top(int size)
+void printTriangleTop(int size)
 {
     using namespace std;
     int rest = size % 2;
     int height = size / 2 + rest;
 
     for (int row = 1; row <= height; row++) {
-    	int spaces_count = height - row;
-        int grids_count = row * 2 - rest;
-        for (int spaces = 0; spaces < spaces_count; spaces++) {
+    	int spacesCount = height - row;
+        int gridsCount = row * 2 - rest;
+        for (int spaces = 0; spaces < spacesCount; spaces++) {
             cout << " ";
         }
-        for (int grids = 0; grids < grids_count; grids++) {
+        for (int grids = 0; grids < gridsCount; grids++) {
             cout << "#";
         }
         cout << "\n";
@@ -144,18 +144,18 @@ void print_triangle_top(int size)
 *   ###
 *    #
 */
-void print_triangle_down(int size)
+void printTriangleDown(int size)
 {
     using namespace std;
     int height = size / 2 + size % 2;
 
     for (int row = 0; row < height; row++) {
-        int spaces_count = row;
-        int grids_count = size - row * 2;
-        for (int spaces = 0; spaces < spaces_count; spaces++) {
+        int spacesCount = row;
+        int gridsCount = size - row * 2;
+        for (int spaces = 0; spaces < spacesCount; spaces++) {
             cout << " ";
         }
-        for (int grids = 0; grids < grids_count; grids++) {
+        for (int grids = 0; grids < gridsCount; grids++) {
             cout << "#";
         }
         cout << "\n";
