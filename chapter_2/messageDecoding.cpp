@@ -1,39 +1,131 @@
 #include <iostream>
 
-/*
-1. Прочитать посимвольно закодированное сообщение
-    которое содержит последовательность положительных целых чисел, разделённых запятыми.
-2. Реализовать 3 способа (режима) декодирования: верхний регистр (uppercase), нижний регистр (lowercase) и пунктуация (punctuation):
-    - Верхний регистр (uppercase). Каждое число, взятое по модулю 27 представляет букву в верхнем регистре (1 - А и т. д.);
-    - Нижний регистр (lowercase). То же самое, что в режиме верхнего регистра, но буквы строчные:
-    - Пунктуация (punctuation). Каждое число, взтое по модулю 9, означает символ согласно таблице.
-3. В начале каждого сообщения устанавливается режим декодирования верхнего регистра.
-   Каждый раз, когда число по модулю 27 или 9 равно 0, переключается режим декодирования:
-       - uppercase -> lowercase
-       - lowercase -> punctuation
-       - punctuation -> uppercase
-4. Таблица пунктуации:
-    1 -> !
-    2 -> ?
-    3 -> ,
-    4 -> .
-    5 -> (пробел)
-    6 -> ;
-    7 -> "
-    8 -> '
+/**
+*# Прочитать посимвольно закодированное сообщение, которое содержит последовательность положительных целых чисел, разделённых запятыми.
+*# Реализовать 3 способа (режима) декодирования: верхний регистр (uppercase), нижний регистр (lowercase) и пунктуация (punctuation):
+*    - Верхний регистр (uppercase). Каждое число, взятое по модулю 27 представляет букву в верхнем регистре (1 - А и т. д.);
+*    - Нижний регистр (lowercase). То же самое, что в режиме верхнего регистра, но буквы строчные:
+*    - Пунктуация (punctuation). Каждое число, взтое по модулю 9, означает символ согласно таблице.
+*# В начале каждого сообщения устанавливается режим декодирования.
+*# Каждый раз, когда число по модулю 27 или 9 равно 0, переключается режим декодирования:
+*    - uppercase -> lowercase
+*    - lowercase -> punctuation
+*    - punctuation -> uppercase
+*# Таблица пунктуации:
+*    1 -> !
+*    2 -> ?
+*    3 -> ,
+*    4 -> .
+*    5 -> (пробел)
+*    6 -> ;
+*    7 -> "
+*    8 -> '
+*
+*# План:
+* 1. Реализовать посимвольное чтение из коносли. +
+* 2. Реализовать посимвольное чтение из файла. +
+* 3. Различать режим декодирования, указанный вначале, разделители и кодовые числа. +
+* 4. Реализовать ф-ю взятия по модулю для каждого из режимов. +
+* 5. Реализовать механизм переключения между режимами (в зависимости от того, что вернула ф-я 4). +
+* 6. Реализовать все 3 механизма декодирования символов. +
 */
 
+const std::string MODE_UPPERCASE = "000";
+const std::string MODE_LOWERCASE = "001";
+const std::string MODE_PUNCTUATION = "002";
+
+const char UPPERCASE_TABLE[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+const char LOWERCASE_TABLE[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+const char PUNCTUATION_TABLE[8] = {'!', '?', ',', '.', ' ', ';', '"', '\''};
+
+int getModule(int x, std::string mode)
+{
+    int result;
+    if (mode == MODE_UPPERCASE) {
+        result = x % 27;
+    } else if (mode == MODE_LOWERCASE) {
+        result = x % 27;
+    } else if (mode == MODE_PUNCTUATION) {
+        result = x % 9;
+    } else {
+        std::cout << "Invalid mode: \"" << mode << "\"!\n";
+    }
+    return result;
+}
+
+std::string switchMode(std::string mode)
+{
+    std::string result;
+    if (mode == MODE_UPPERCASE) {
+        result = MODE_LOWERCASE;
+    } else if (mode == MODE_LOWERCASE) {
+        result = MODE_PUNCTUATION;
+    } else if (mode == MODE_PUNCTUATION) {
+        result = MODE_UPPERCASE;
+    } else {
+        std::cout << "Invalid mode: \"" << mode << "\"!\n";
+    }
+    return result;
+}
+
+char decodeNumber(int number, std::string mode)
+{
+    char result;
+    if (mode == MODE_UPPERCASE) {
+        result = UPPERCASE_TABLE[number - 1];
+    } else if (mode == MODE_LOWERCASE) {
+        result = LOWERCASE_TABLE[number - 1];
+    } else if (mode == MODE_PUNCTUATION) {
+        result = PUNCTUATION_TABLE[number - 1];
+    } else {
+        std::cout << "Invalid mode: \"" << mode << "\"!\n";
+    }
+    return result;
+}
+
+/**
+* g++ main.cpp && ./a.out < ./chapter_2/encoded_message.key
+*/
 void decode()
 {
     using namespace std;
-    char symbol;
 
-    cout << "Paste the code:\n>";
+    // Get code-string from console or from file if it's given
+    string code;
+    cin >> code;
 
-    symbol = cin.get();
-    while (symbol != 10) {
-        cout << symbol << " ";
+    // Identify decoding - first 3 symbols of code
+    string mode = code.substr(0, 3);
+    // Remove decoding identifier from code
+    code.erase(0, 3);
+
+    // Get code length and create tmp var for holding code-number string values
+    int codeLength = code.length();
+    string decodedString = "";
+    //cout << "Code: " << code << " (" << codeLength << ")\n";
+
+    // Read code by each symbol and decode each number
+    string lastNumber = "";
+    int module = 0;
+    for (int i = 0; i < codeLength; i++) {
+        if (code[i] != ',') {
+            lastNumber.push_back(code[i]);
+        }
+        if (code[i] == ',' || i + 1 == codeLength) {
+    	    module = getModule(stringToInteger(lastNumber), mode);
+            //cout << i + 1 << ": " << lastNumber << "->" << module << "->" << decodeNumber(module, mode) << "\n";
+
+    	    // Switch decoding mode if module of current number is 0
+            // Decode module and add decoded char to result string
+    	    if (module == 0) {
+    	        mode = switchMode(mode);
+    	    } else {
+    	        decodedString.push_back(decodeNumber(module, mode));
+    	    }
+            // Clear "last number" string
+            lastNumber = "";
+        }
     }
 
-    cout << "\n";
+    cout << "Decoded string: " << decodedString << "\n";
 }

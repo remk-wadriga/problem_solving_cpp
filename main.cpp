@@ -1,4 +1,5 @@
 #include <iostream>
+#include "./helpers/IntegersHelper.cpp"
 #include "./chapter_2/messageDecoding.cpp"
 
 int main()
