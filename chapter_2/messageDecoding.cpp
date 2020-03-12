@@ -108,11 +108,7 @@ void decode()
     	num = code[i];
     	// This is part of number, so add it to number
     	if (num != ',') {
-            if (number == 0) {
-                number = num - '0';
-            } else {
-                number = number * 10 + (num - '0');
-            }
+            number = number * 10 + (num - '0');
     	}
     	// This is end of number, so...
     	if (num == ',' || i + 1 == codeLength) {
