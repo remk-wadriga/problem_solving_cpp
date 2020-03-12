@@ -102,29 +102,33 @@ void decode()
     // Get code length and create tmp var for holding code-number string values
     int codeLength = code.length();
     string decodedString = "";
-    //cout << "Code: " << code << " (" << codeLength << ")\n";
-
-    // Read code by each symbol and decode each number
-    string lastNumber = "";
-    int module = 0;
+    char num, symbol;
+    int number = 0, module = 0;
     for (int i = 0; i < codeLength; i++) {
-        if (code[i] != ',') {
-            lastNumber.push_back(code[i]);
-        }
-        if (code[i] == ',' || i + 1 == codeLength) {
-    	    module = getModule(stringToInteger(lastNumber), mode);
-            //cout << i + 1 << ": " << lastNumber << "->" << module << "->" << decodeNumber(module, mode) << "\n";
-
-    	    // Switch decoding mode if module of current number is 0
-            // Decode module and add decoded char to result string
-    	    if (module == 0) {
-    	        mode = switchMode(mode);
-    	    } else {
-    	        decodedString.push_back(decodeNumber(module, mode));
-    	    }
-            // Clear "last number" string
-            lastNumber = "";
-        }
+    	num = code[i];
+    	// This is part of number, so add it to number
+    	if (num != ',') {
+            if (number == 0) {
+                number = num - '0';
+            } else {
+                number = number * 10 + (num - '0');
+            }
+    	}
+    	// This is end of number, so...
+    	if (num == ',' || i + 1 == codeLength) {
+    	    // calculate the module of number
+            module = getModule(number, mode);
+            if (module == 0) {
+                // switch mode if needed
+                mode = switchMode(mode);
+            } else {
+                // or get decoded symbol and add it to end of decoded string
+                symbol = decodeNumber(module, mode);
+                decodedString.push_back(symbol);
+            }
+            // and set next number to 0
+            number = 0;
+    	}
     }
 
     cout << "Decoded string: " << decodedString << "\n";
