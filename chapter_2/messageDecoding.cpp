@@ -94,24 +94,17 @@ void decode()
     string code;
     cin >> code;
 
-    // Identify decoding - first 3 symbols of code
+    // Identify decoding - first 3 symbols of code and remove them from code
     string mode = code.substr(0, 3);
-    // Remove decoding identifier from code
     code.erase(0, 3);
 
     // Get code length and create tmp var for holding code-number string values
     int codeLength = code.length();
     string decodedString = "";
-    char num, symbol;
     int number = 0, module = 0;
     for (int i = 0; i < codeLength; i++) {
-    	num = code[i];
-    	// This is part of number, so add it to number
-    	if (num != ',') {
-            number = number * 10 + (num - '0');
-    	}
     	// This is end of number, so...
-    	if (num == ',' || i + 1 == codeLength) {
+    	if (code[i] == ',' || i + 1 == codeLength) {
     	    // calculate the module of number
             module = getModule(number, mode);
             if (module == 0) {
@@ -119,11 +112,13 @@ void decode()
                 mode = switchMode(mode);
             } else {
                 // or get decoded symbol and add it to end of decoded string
-                symbol = decodeNumber(module, mode);
-                decodedString.push_back(symbol);
+                decodedString.push_back(decodeNumber(module, mode));
             }
             // and set next number to 0
             number = 0;
+    	} else {
+    	    // This is part of number, so add it to number
+    	    number = number * 10 + (code[i] - '0');
     	}
     }
 
