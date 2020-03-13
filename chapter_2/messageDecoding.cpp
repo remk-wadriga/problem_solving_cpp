@@ -30,15 +30,13 @@
 * 6. Реализовать все 3 механизма декодирования символов. +
 */
 
-const std::string MODE_UPPERCASE = "000";
-const std::string MODE_LOWERCASE = "001";
-const std::string MODE_PUNCTUATION = "002";
+enum modeType {MODE_UPPERCASE, MODE_LOWERCASE, MODE_PUNCTUATION};
 
 const char UPPERCASE_TABLE[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 const char LOWERCASE_TABLE[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 const char PUNCTUATION_TABLE[8] = {'!', '?', ',', '.', ' ', ';', '"', '\''};
 
-int getModule(int x, std::string mode)
+int getModule(int x, int mode)
 {
     int result;
     if (mode == MODE_UPPERCASE) {
@@ -53,9 +51,9 @@ int getModule(int x, std::string mode)
     return result;
 }
 
-std::string switchMode(std::string mode)
+int switchMode(int mode)
 {
-    std::string result;
+    int result;
     if (mode == MODE_UPPERCASE) {
         result = MODE_LOWERCASE;
     } else if (mode == MODE_LOWERCASE) {
@@ -68,7 +66,7 @@ std::string switchMode(std::string mode)
     return result;
 }
 
-char decodeNumber(int number, std::string mode)
+char decodeNumber(int number, int mode)
 {
     char result;
     if (mode == MODE_UPPERCASE) {
@@ -97,7 +95,7 @@ void decode()
     cin >> code;
 
     // Identify decoding - first 3 symbols of code and remove them from code
-    string mode = code.substr(0, 3);
+    int mode = stringToInteger(code.substr(0, 3));
     code.erase(0, 3);
 
     // Get code length and create tmp var for holding code-number string values
