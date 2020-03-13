@@ -72,9 +72,11 @@ char decodeNumber(int number, std::string mode)
 {
     char result;
     if (mode == MODE_UPPERCASE) {
-        result = UPPERCASE_TABLE[number - 1];
+        //result = UPPERCASE_TABLE[number - 1];
+        result = 'A' + (number - 1);
     } else if (mode == MODE_LOWERCASE) {
-        result = LOWERCASE_TABLE[number - 1];
+        //result = LOWERCASE_TABLE[number - 1];
+        result = 'a' + (number - 1);
     } else if (mode == MODE_PUNCTUATION) {
         result = PUNCTUATION_TABLE[number - 1];
     } else {
