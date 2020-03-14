@@ -8,7 +8,8 @@ int main()
     using namespace std;
 
     for (int i = 3; i <= 9; i++) {
-    	printEmptyRhombus(i);
+        cout << i << "\n";
+    	printHourglass(i);
         cout << "\n";
     }
 

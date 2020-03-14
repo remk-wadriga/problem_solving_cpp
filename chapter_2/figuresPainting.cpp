@@ -170,32 +170,21 @@ void printTriangleDown(int size)
 *   ###
 *    #
 */
-void printRhombusRow(int row, int size)
-{
-    using namespace std;
-    int spCount = row;
-    int hsCount = size - spCount * 2;
-    for (int i = 0; i < spCount; i++) {
-        cout << " ";
-    }
-    for (int i = 0; i < hsCount; i++) {
-        cout << "#";
-    }
-    cout  << "\n";
-}
 void printRhombus(int size)
 {
     using namespace std;
     int modSize = size % 2;
-    int halfSize = size / 2;
-    int height = size - 1 + modSize;
-    int midHeight = height / 2 + 1;
 
-    for (int row = midHeight - 1; row >= 0; row--) {
-        printRhombusRow(row, size);
-    }
-    for (int row = 1; row < midHeight; row++) {
-        printRhombusRow(row, size);
+    for (int row = 0; row < size; row++) {
+        int spCount = abs(size / 2 - row);
+        int hsCount = abs(size - spCount * 2);
+        for (int i = 0; i < spCount; i++) {
+            cout << " ";
+        }
+        for (int i = 0; i < hsCount; i++) {
+            cout << "#";
+        }
+        cout  << "\n";
     }
 }
 
@@ -207,34 +196,32 @@ void printRhombus(int size)
 *   ###
 *  #####
 */
-void printHourglassRow(int row, int size)
-{
-    using namespace std;
-    int spCount = row;
-    int hsCount = size - spCount * 2;
-    for (int i = 0; i < spCount; i++) {
-        cout << " ";
-    }
-    for (int i = 0; i < hsCount; i++) {
-        cout << "#";
-    }
-    cout  << "\n";
-}
 void printHourglass(int size)
 {
     using namespace std;
     int modSize = size % 2;
-    int halfSize = size / 2;
-    int height = size - (1 - modSize);
-    int midHeight = height / 2;
+    int height = size + modSize - 1;
+    int spCount = 0;
 
-    for (int row = 0; row < midHeight; row++) {
-        printHourglassRow(row, size);
+    for (int row = height; row > 0; row--) {
+        if (row >= size / 2 + 1) {
+            spCount = size - row;
+            if (modSize == 0) {
+                spCount--;
+            }
+        } else {
+            spCount = row - 1;
+        }
+        int hsCount = size - spCount * 2;
+        for (int i = 0; i < spCount; i++) {
+            cout << " ";
+        }
+        for (int i = 0; i < hsCount; i++) {
+            cout << "#";
+        }
+        cout << "      " << row << ": " << spCount << " " << hsCount;
+        cout  << "\n";
     }
-    for (int row = midHeight; row >= 0; row--) {
-        printHourglassRow(row, size);
-    }
-
 }
 
 /** Prints something like this:
