@@ -1,5 +1,6 @@
 #include <iostream>
-#include "./helpers/IntegersHelper.cpp"
+#include "./helpers/IntegerHelper.cpp"
+#include "./helpers/StringHelper.cpp"
 #include "./chapter_2/figuresPainting.cpp"
 #include "./chapter_2/messageDecoding.cpp"
 
@@ -9,7 +10,7 @@ int main()
 
     for (int i = 3; i <= 9; i++) {
         cout << i << "\n";
-    	printHourglass(i);
+    	printFatX(i);
         cout << "\n";
     }
 

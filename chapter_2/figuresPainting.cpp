@@ -6,11 +6,9 @@
 void printHalfOfSquareRight1(int size)
 {
     using namespace std;
+
     for (int row = size; row > 0; row--) {
-        for (int line = 0; line < row; line++) {
-            cout << "#";
-        }
-        cout << "\n";
+        cout << stringRepeat("#", row) << "\n";
     }
 }
 
@@ -22,14 +20,9 @@ void printHalfOfSquareRight1(int size)
 void printHalfOfSquareLeft1(int size)
 {
     using namespace std;
+
     for (int row = 0; row < size; row++) {
-    	for (int spaces = 0; spaces < row; spaces++) {
-    		cout << " ";
-    	}
-    	for (int grids = 0; grids < size - row; grids++) {
-            cout << "#";
-        }
-    	cout << "\n";
+    	cout << stringRepeat(" ", row) << stringRepeat("#", size - row) << "\n";
     }
 }
 
@@ -41,11 +34,9 @@ void printHalfOfSquareLeft1(int size)
 void printHalfOfSquareRight2(int size)
 {
     using namespace std;
+
     for (int row = 1; row <= size; row++) {
-    	for (int line = 0; line < row; line++) {
-    		cout << "#";
-    	}
-    	cout << "\n";
+    	cout << stringRepeat("#", row) << "\n";
     }
 }
 
@@ -57,14 +48,9 @@ void printHalfOfSquareRight2(int size)
 void printHalfOfSquareLeft2(int size)
 {
     using namespace std;
+
     for (int row = 1; row <= size; row++) {
-    	for (int spaces = 0; spaces < size - row; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < row; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
+        cout << stringRepeat(" ", size - row) << stringRepeat("#", row) << "\n";
     }
 }
 
@@ -79,15 +65,10 @@ void printHalfOfSquareLeft2(int size)
 void printTriangleRight(int size)
 {
     using namespace std;
-    int doubleSze = size*2;
+    int height = size * 2;
 
-    for (int row = 1; row < doubleSze; row++) {
-        //int rowLength = row <= size ? row : doubleSze - row;
-        int rowLength = size - abs(size - row);
-        for (int line = 0; line < rowLength; line++) {
-            cout << "#";
-        }
-        cout << "\n";
+    for (int row = 1; row < height; row++) {
+        cout << stringRepeat("#", size - abs(size - row)) << "\n";
     }
 }
 
@@ -101,17 +82,13 @@ void printTriangleRight(int size)
 void printTriangleLeft(int size)
 {
     using namespace std;
-    int doubleSze = size * 2;
-    for (int row = 1; row < doubleSze; row++) {
-    	int spacesCount = abs(size - row);
-        int gridsCount = size - spacesCount;
-        for (int spaces = 0; spaces < spacesCount; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < gridsCount; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
+    int height = size * 2;
+    int spCount = 0, hsCount = 0;
+
+    for (int row = 1; row < height; row++) {
+    	int spCount = abs(size - row);
+        int hsCount = size - spCount;
+        cout << stringRepeat(" ", spCount) << stringRepeat("#", hsCount) << "\n";
     }
 }
 
@@ -123,19 +100,14 @@ void printTriangleLeft(int size)
 void printTriangleTop(int size)
 {
     using namespace std;
-    int rest = size % 2;
-    int height = size / 2 + rest;
+    int modSize = size % 2;
+    int height = size / 2 + modSize;
+    int spCount = 0, hsCount = 0;
 
     for (int row = 1; row <= height; row++) {
-    	int spacesCount = height - row;
-        int gridsCount = row * 2 - rest;
-        for (int spaces = 0; spaces < spacesCount; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < gridsCount; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
+    	spCount = height - row;
+        hsCount = row * 2 - modSize;
+        cout << stringRepeat(" ", spCount) << stringRepeat("#", hsCount) << "\n";
     }
 }
 
@@ -150,15 +122,7 @@ void printTriangleDown(int size)
     int height = size / 2 + size % 2;
 
     for (int row = 0; row < height; row++) {
-        int spacesCount = row;
-        int gridsCount = size - row * 2;
-        for (int spaces = 0; spaces < spacesCount; spaces++) {
-            cout << " ";
-        }
-        for (int grids = 0; grids < gridsCount; grids++) {
-            cout << "#";
-        }
-        cout << "\n";
+        cout << stringRepeat(" ", row) << stringRepeat("#", size - row * 2) << "\n";
     }
 }
 
@@ -174,17 +138,14 @@ void printRhombus(int size)
 {
     using namespace std;
     int modSize = size % 2;
+    int height = size - 1 + modSize;
+    int spCount = 0, hsCount = 0;
+    cout << "Height: " << height << "\n";
 
-    for (int row = 0; row < size; row++) {
-        int spCount = abs(size / 2 - row);
-        int hsCount = abs(size - spCount * 2);
-        for (int i = 0; i < spCount; i++) {
-            cout << " ";
-        }
-        for (int i = 0; i < hsCount; i++) {
-            cout << "#";
-        }
-        cout  << "\n";
+    for (int row = 0; row < height; row++) {
+        spCount = abs(size / 2 - row - 1 + modSize);
+        hsCount = size - spCount * 2;
+        cout << stringRepeat(" ", spCount) << stringRepeat("#", hsCount) << "\n";
     }
 }
 
@@ -200,27 +161,15 @@ void printHourglass(int size)
 {
     using namespace std;
     int modSize = size % 2;
-    int height = size + modSize - 1;
-    int spCount = 0;
+    int height = size - 1 + modSize;
+    int spCount = 0, hsCount = 0;
 
-    for (int row = height; row > 0; row--) {
-        if (row >= size / 2 + 1) {
-            spCount = size - row;
-            if (modSize == 0) {
-                spCount--;
-            }
-        } else {
-            spCount = row - 1;
-        }
-        int hsCount = size - spCount * 2;
-        for (int i = 0; i < spCount; i++) {
-            cout << " ";
-        }
-        for (int i = 0; i < hsCount; i++) {
-            cout << "#";
-        }
-        cout << "      " << row << ": " << spCount << " " << hsCount;
-        cout  << "\n";
+    for (int row = 0; row < height; row++) {
+    	spCount = height / 2 - abs(height / 2 - row);
+        hsCount = size - spCount * 2;
+        cout << stringRepeat(" ", spCount) << stringRepeat("#", hsCount);
+        cout << "     " << row << ": " << spCount << " " << hsCount;
+        cout << "\n";
     }
 }
 
@@ -231,34 +180,22 @@ void printHourglass(int size)
 *   # #
 *    #
 */
-void printEmptyRhombusRow(int row, int size, int height, int modSize)
-{
-    using namespace std;
-    int sp1Count = row;
-    int sp2Count = size - sp1Count * 2 - modSize - 1;
-    for (int i = 0; i < sp1Count; i++) {
-        cout << " ";
-    }
-    cout << "#";
-    for (int i = 0; i < sp2Count; i++) {
-        cout << " ";
-    }
-    if (modSize == 0 || (row < height - 1)) {
-        cout << "#";
-    }
-    cout  << "\n";
-}
 void printEmptyRhombus(int size)
 {
     using namespace std;
     int modSize = size % 2;
-    int height = (size - 1 + modSize) / 2 + 1;
+    int height = size - 1 + modSize;
+    int sp1Count = 0, sp2Count = 0;
+    cout << "Height: " << height << "\n";
 
-    for (int row = height - 1; row >= 0; row--) {
-        printEmptyRhombusRow(row, size, height, modSize);
-    }
-    for (int row = 1; row < height; row++) {
-        printEmptyRhombusRow(row, size, height, modSize);
+    for (int row = 0; row < height; row++) {
+        sp1Count = abs(size / 2 - row - 1 + modSize);
+        sp2Count = size - sp1Count * 2 - 2;
+        cout << stringRepeat(" ", sp1Count) << "#" << stringRepeat(" ", sp2Count);
+        if (modSize == 0 || sp2Count > 0) {
+            cout << "#";
+        }
+        cout << "\n";
     }
 }
 
@@ -269,90 +206,54 @@ void printEmptyRhombus(int size)
 *   # #
 *  #   #
 */
-void printXRow(int row, int size, int midHeight, int modSize)
-{
-    using namespace std;
-    int sp1Count = row;
-    int sp2Count = size - sp1Count * 2 - modSize - 1;
-    for (int i = 0; i < sp1Count; i++) {
-        cout << " ";
-    }
-    cout << "#";
-    for (int i = 0; i < sp2Count; i++) {
-        cout << " ";
-    }
-    if (modSize == 0 || row != midHeight - 1) {
-        cout << "#";
-    }
-    cout  << "\n";
-}
 void printX(int size)
 {
     using namespace std;
     int modSize = size % 2;
-    int halfSize = size / 2;
     int height = size - 1 + modSize;
-    int midHeight = height / 2 + 1;
+    int sp1Count = 0, sp2Count = 0;
 
-    for (int row = 0; row < midHeight; row++) {
-        printXRow(row, size, midHeight, modSize);
-    }
-    for (int row = midHeight - 2; row >= 0; row--) {
-        printXRow(row, size, midHeight, modSize);
+    for (int row = 0; row < height; row++) {
+        sp1Count = height / 2 - abs(height / 2 - row);
+        sp2Count = size - sp1Count * 2 - 2;
+        cout << stringRepeat(" ", sp1Count) << "#" << stringRepeat(" ", sp2Count);
+        if (modSize == 0 || sp2Count > 0) {
+            cout << "#";
+        }
+        cout << "\n";
     }
 }
 
 /** Prints something like this:
-* #            #
-*  ##        ##
-*   ###    ###
-*    ########
-*    ########
-*   ###    ###
-*  ##        ##
-* #            #
+* #         #
+*  ##     ##
+*   ### ###
+*    #####
+*   ### ###
+*  ##     ##
+* #         #
 */
-void printFatXRow(int row, int size, int width, int height, int modSize)
-{
-    using namespace std;
-    int sp1Count = row;
-    int rowWidth = width - row * 2;
-    int hs1Count = 0, sp2Count = 0, hs2Count = 0;
-    if (row < height - 1) {
-        hs1Count = hs2Count = row + 1;
-        sp2Count = rowWidth - hs1Count * 2;
-    } else {
-        hs1Count = size;
-        hs2Count = sp2Count = 0;
-    }
-
-    for (int line = 0; line < sp1Count; line++) {
-        cout << " ";
-    }
-    for (int line = 0; line < hs1Count; line++) {
-        cout << "#";
-    }
-    for (int line = 0; line < sp2Count; line++) {
-        cout << " ";
-    }
-    for (int line = 0; line < hs2Count; line++) {
-        cout << "#";
-    }
-
-    cout << "\n";
-}
 void printFatX(int size)
 {
     using namespace std;
 
     int modSize = size % 2;
     int width = size * 2 + 2 - modSize;
-    int height = size - size / 2 + 2 - modSize;
+    int height = size + 3 - modSize;
+    int midHeight = height / 2;
+    int sp1Count = 0, rowWidth = 0, hs1Count = 0, sp2Count = 0, hs2Count = 0;
 
     for (int row = 0; row < height; row++) {
-        printFatXRow(row, size, width, height, modSize);
-    }
-    for (int row = height - 1; row >= 0; row--) {
-        printFatXRow(row, size, width, height, modSize);
+        sp1Count = height / 2 - abs(height / 2 - row);
+        rowWidth = width - sp1Count * 2;
+        if (row == midHeight) {
+            hs1Count = size;
+            sp2Count = hs2Count = 0;
+        } else {
+            hs1Count = sp1Count + 1;
+            sp2Count = abs(rowWidth - hs1Count * 2) + 1 * modSize;
+            hs2Count = rowWidth - hs1Count - sp2Count + 1 * modSize;
+        }
+        cout << stringRepeat(" ", sp1Count) << stringRepeat("#", hs1Count) << stringRepeat(" ", sp2Count) << stringRepeat("#", hs2Count) << "\n";
     }
 }
