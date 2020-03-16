@@ -251,8 +251,8 @@ void printFatX(int size)
             sp2Count = hs2Count = 0;
         } else {
             hs1Count = sp1Count + 1;
-            sp2Count = abs(rowWidth - hs1Count * 2) + 1 * modSize;
-            hs2Count = rowWidth - hs1Count - sp2Count + 1 * modSize;
+            sp2Count = abs(rowWidth - hs1Count * 2) - modSize + modSize;
+            hs2Count = rowWidth - hs1Count - sp2Count;
         }
         cout << stringRepeat(" ", sp1Count) << stringRepeat("#", hs1Count) << stringRepeat(" ", sp2Count) << stringRepeat("#", hs2Count) << "\n";
     }
