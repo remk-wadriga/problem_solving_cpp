@@ -31,14 +31,42 @@ void printArr(int arr[], const int size)
     cout << "]";
 }
 
+void selectionSort(int arr[], const int size)
+{
+    using namespace std;
+    int val, check, nextIndex, minIndex;
+    int maxIndex = size - 1;
+    long long steps = 0;
+
+    for (int j = 0; j < maxIndex; j++) {
+        minIndex = j;
+        for (int i = j + 1; i < size; i++) {
+            steps++;
+            if (arr[i] < arr[minIndex]) {
+                minIndex = i;
+            }
+        }
+        if (minIndex != j) {
+            val = arr[minIndex];
+            arr[minIndex] = arr[j];
+            arr[j] = val;
+        }
+    }
+
+    cout << steps << "\n";
+}
+
 void bubbleSort(int arr[], const int size)
 {
     using namespace std;
     int nextVal, check, nextIndex, maxIndex;
+    long long steps = 0;
+
     for (int j = 1; j < size; j++) {
         check = 0;
         maxIndex = size - j;
         for (int i = 0; i < maxIndex; i++) {
+            steps++;
         	nextIndex = i + 1;
         	nextVal = arr[nextIndex];
         	if (arr[i] > nextVal) {
@@ -51,4 +79,29 @@ void bubbleSort(int arr[], const int size)
             break;
         }
     }
+
+    cout << steps << "\n";
+}
+
+void insertionSort(int arr[], const int size)
+{
+    using namespace std;
+    int val, prevIndex, prevVal;
+    long long steps = 0;
+
+    for (int j = 1; j < size; j++) {
+        val = arr[j];
+    	for (int i = j; i > 0; i--) {
+    	    steps++;
+    	    prevIndex = i - 1;
+    	    prevVal = arr[prevIndex];
+    	    if (val >= prevVal) {
+    	        break;
+    	    }
+    	    arr[prevIndex] = arr[i];
+    	    arr[i] = prevVal;
+    	}
+    }
+
+    cout << steps << "\n";
 }
