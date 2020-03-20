@@ -3,6 +3,7 @@
 #include "./helpers/IntegerHelper.cpp"
 #include "./helpers/StringHelper.cpp"
 #include "./helpers/ArrayHelper.cpp"
+#include "./Chapter_3/Statistics.spp"
 
 int main()
 {
