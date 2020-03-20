@@ -16,7 +16,7 @@ int main()
     int* arr = generateArr(ARRAY_SIZE, -size, size);*/
 
     const int ARRAY_SIZE = 12;
-    int arr[ARRAY_SIZE] = {4, 7, 3, 8, 9, 7, 3, 9, 9, 3, 3, 10};
+    int arr[ARRAY_SIZE] = {4, 7, 3, 9, 9, 7, 3, 9, 9, 3, 3, 10};
 
     srand(time(0));
 
