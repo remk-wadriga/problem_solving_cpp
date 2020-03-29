@@ -1,5 +1,16 @@
 #include <iostream>
 
+std::string int2str(int integer)
+{
+    std::string result = "";
+    while (integer > 0) {
+        char num = integer % 10 + '0';
+        integer /= 10;
+        result = num + result;
+    }
+    return result;
+}
+
 std::string stringRepeat(std::string str, int count, std::string delimiter)
 {
     using namespace std;

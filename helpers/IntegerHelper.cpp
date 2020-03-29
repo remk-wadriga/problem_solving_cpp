@@ -7,7 +7,7 @@ int unsignedPow(int base, int pow)
     return result;
 }
 
-int stringToInteger(std::string code)
+int str2int(std::string code)
 {
     int codeLength = code.length();
     int result = 0;
