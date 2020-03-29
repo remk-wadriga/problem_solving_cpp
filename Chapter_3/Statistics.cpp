@@ -15,7 +15,7 @@ int calculateMode(int arr[], const int size)
     selectionSort(arr, size);
 
     // 2, 3. Find the longest sequence
-    int lastCount = 1, maxCount = 0;
+    int lastCount = 1, maxCount = 1;
     int lastElement = arr[0];
     int mode = lastElement;
     for (int j = 1; j < size; j++) {
