@@ -7,12 +7,12 @@
 * 2. Найти способ определения конца последовательности одинаковых чисел +
 * 3. Посчитать последовательно количество всех чисел, чтобы определить наибольшую последовательность +
 */
-int calculateMode(int arr[], const int size)
+int calculateModeUsingSort(int *arr, const int size)
 {
     using namespace std;
 
     // 1. sort an array
-    selectionSort(arr, size);
+    quickSort(arr, size);
 
     // 2, 3. Find the longest sequence
     int lastCount = 1, maxCount = 1;
@@ -32,4 +32,15 @@ int calculateMode(int arr[], const int size)
     }
 
     return mode;
+}
+
+int calculateMode(int arr[], const int maxResponse, const int size)
+{
+    using namespace std;
+    int *histogram = createHistogram(arr, maxResponse, size);
+
+    int maxElem = maxElement(histogram, maxResponse);
+    return indexOf(maxElem, histogram, maxResponse) + 1;
+
+    return 0;
 }

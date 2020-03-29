@@ -24,6 +24,17 @@ int* createArray(const int size, int elem)
     return arr;
 }
 
+int* createHistogram(int arr[], const int maxVal, const int size)
+{
+    int *histogram = createArray(maxVal, 0);
+
+    for (int i = 0; i < size; i++) {
+    	histogram[arr[i] - 1]++;
+    }
+
+    return histogram;
+}
+
 void printArr(int arr[], const int size)
 {
     using namespace std;
@@ -37,7 +48,7 @@ void printArr(int arr[], const int size)
         }
         cout << "\n";
     }
-    cout << "]";
+    cout << "]\n";
 }
 
 int indexOf(int elem, int arr[], const int size)
@@ -48,6 +59,17 @@ int indexOf(int elem, int arr[], const int size)
     	}
     }
     return -1;
+}
+
+int maxElement(int arr[], const int size)
+{
+    int maxElem = 0;
+    for (int i = 0; i < size; i++) {
+    	if (arr[i] > maxElem || maxElem == 0) {
+    	    maxElem = arr[i];
+    	}
+    }
+    return maxElem;
 }
 
 // <-- Sorting algorithms -->
@@ -66,8 +88,6 @@ int indexOf(int elem, int arr[], const int size)
             // Inserts.     10: (0.000878), 100: (0.001064), 1000: (0.006196), 10000: (0.171522), 100000: (16.9245), 1000000: (1696.16)
             // Selection.   10: (0.000986), 100: (0.000995), 1000: (0.006226), 10000: (0.095727), 100000: (8.98968), 1000000: (898.247)
             // Quick.       10: (0.000803), 100: (0.000772), 1000: (0.001013), 10000: (0.002564), 100000: (0.022071), 1000000: (0.251118)
-
-
     // PHP:
         // With iteration calculation:
             // Bubbles.     10: 45 (0.000023), 100: 4950 (0.000657), 1000: 499499 (0.059985), 10000: 49995000 (6.070219), 100000: 4999949994 (627.978346)
