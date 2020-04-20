@@ -1,3 +1,5 @@
+#include <iostream>
+
 /* Prints something like this:
 * ###
 * ##
