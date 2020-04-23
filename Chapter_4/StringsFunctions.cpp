@@ -52,20 +52,29 @@ void concatenate(ArrayString &startStr, ArrayString endStr)
     }
 }
 
+ArrayString substring(ArrayString str, int start, int length)
+{
+    int maxLength = strLength(str);
+    if (start + length > maxLength) {
+        length = maxLength - start;
+    }
+    ArrayString res = new char[length + 1];
+    for (int i = start; i < start + length; i++) {
+    	res[i - start] = str[i];
+    }
+    res[length] = 0;
+    return res;
+}
 
 void demonstrateStrings4()
 {
-    ArrayString a = createFromString("");
+    /*ArrayString a = createFromString("");
     ArrayString b = createFromString("test");
     concatenate(a, b);
     cout << "a:" << a << " (" << (void *)a << ")" << "\n";
-    cout << "b:" << b << " (" << (void *)b << ")" << "\n";
+    cout << "b:" << b << " (" << (void *)b << ")" << "\n";*/
 
-    /*ArrayString str = createFromString("Hello");
-
-    append(str, ' ');
-    concatenate(str, createFromString("World"));
-    append(str, '!');
-
-    cout << str << " (" << strLength(str) << ")" << "\n";*/
+    ArrayString str = createFromString("Very_long_string...");
+    ArrayString substr = substring(str, 1, 300);
+    cout << substr << " (" << strLength(substr) << ")" << "\n";
 }
