@@ -3,20 +3,31 @@
 using namespace std;
 
 // Declare new type;
-typedef char* ArrayString;
+typedef char* ArrayStringNullByte;
+typedef char* ArrayStringSizeByte;
 
-ArrayString createFromString(string str)
+ArrayStringNullByte createFromStringNullByte(string str)
 {
     int length = str.length();
-    ArrayString res = new char[length + 1];
+    ArrayStringNullByte res = new char[length + 1];
     for (int i = 0; i < length; i++) {
     	res[i] = str[i];
     }
     res[length] = 0;
     return res;
 }
+ArrayStringSizeByte createFromStringSizeByte(string str)
+{
+    int length = str.length();
+    ArrayStringSizeByte res = new char[length + 1];
+    res[0] = length;
+    for (int i = 1; i <= length; i++) {
+        res[i] = str[i - 1];
+    }
+    return res;
+}
 
-int strLength(const ArrayString str)
+int strLengthNullByte(ArrayStringNullByte str)
 {
     int length = 0;
     while (str[length] != 0) {
@@ -24,16 +35,45 @@ int strLength(const ArrayString str)
     }
     return length;
 }
-
-char characterAt(const ArrayString str, const int pos)
+int strLengthSizeByte(ArrayStringSizeByte str)
 {
-    return str[pos];
+    return str != NULL ? str[0] : 0;
 }
 
-bool compareStrings(ArrayString str1, ArrayString str2)
+void printStringNullByte(ArrayStringNullByte str)
 {
-    int strLen = strLength(str1);
-    if (strLen != strLength(str2)) {
+    for (int i = 0; i < strLengthNullByte(str); i++) {
+    	cout << str[i];
+    }
+    cout << "\n";
+}
+void printStringSizeByte(ArrayStringSizeByte str)
+{
+    for (int i = 1; i <= strLengthSizeByte(str); i++) {
+    	cout << str[i];
+    }
+    cout << "\n";
+}
+
+char characterAtNullByte(const ArrayStringNullByte str, const int pos)
+{
+    if (pos >= strLengthNullByte(str)) {
+        return 0;
+    }
+    return str[pos];
+}
+char characterAtSizeByte(const ArrayStringSizeByte str, const int pos)
+{
+    if (pos >= strLengthSizeByte(str)) {
+        return 0;
+    }
+    return str[pos + 1];
+}
+
+bool compareStringsNullByte(ArrayStringNullByte str1, ArrayStringNullByte str2)
+{
+    int strLen = strLengthNullByte(str1);
+    if (strLen != strLengthNullByte(str2)) {
         return false;
     }
     for (int i = 0; i < strLen; i++) {
@@ -43,50 +83,95 @@ bool compareStrings(ArrayString str1, ArrayString str2)
     }
     return true;
 }
-
-void append(ArrayString &str, const char chr)
+bool compareStringsSizeByte(ArrayStringSizeByte str1, ArrayStringSizeByte str2)
 {
-    int i = 0, length = strLength(str);
-    ArrayString newStr = new char[length + 2];
+    int strLen = strLengthSizeByte(str1);
+    if (strLen != strLengthSizeByte(str2)) {
+        return false;
+    }
+    for (int i = 1; i <= strLen; i++) {
+        if (str1[i] != str2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void appendNullByte(ArrayStringNullByte &str, const char chr)
+{
+    int i = 0, length = strLengthNullByte(str);
+    ArrayStringNullByte newStr = new char[length + 2];
     for (i; i < length; i++) {
-    	newStr[i] = characterAt(str, i);
+    	newStr[i] = characterAtNullByte(str, i);
     }
     newStr[i++] = chr;
     newStr[i] = 0;
     delete[] str;
     str = newStr;
 }
-
-void concatenate(ArrayString &startStr, ArrayString endStr)
+void appendSizeByte(ArrayStringSizeByte &str, const char chr)
 {
-    int length = strLength(endStr);
+    int i = 1, length = strLengthSizeByte(str);
+    ArrayStringSizeByte newStr = new char[length + 2];
+    newStr[0] = length + 1;
+    for (i; i <= length; i++) {
+    	newStr[i] = str[i];
+    }
+    newStr[i] = chr;
+    delete[] str;
+    str = newStr;
+}
+
+void concatenateNullByte(ArrayStringNullByte &startStr, ArrayStringNullByte endStr)
+{
+    int length = strLengthNullByte(endStr);
     for (int i = 0; i < length; i++) {
-        append(startStr, characterAt(endStr, i));
+        appendNullByte(startStr, characterAtNullByte(endStr, i));
+    }
+}
+void concatenateSizeByte(ArrayStringSizeByte &startStr, ArrayStringSizeByte endStr)
+{
+    int length = strLengthSizeByte(endStr);
+    for (int i = 0; i < length; i++) {
+        appendSizeByte(startStr, characterAtSizeByte(endStr, i));
     }
 }
 
-ArrayString substring(ArrayString str, int start, int length)
+ArrayStringNullByte substringNullByte(ArrayStringNullByte str, int start, int length)
 {
-    int maxLength = strLength(str);
+    int maxLength = strLengthNullByte(str);
     if (start + length > maxLength) {
         length = maxLength - start;
     }
-    ArrayString res = new char[length + 1];
+    ArrayStringNullByte res = new char[length + 1];
     for (int i = start; i < start + length; i++) {
     	res[i - start] = str[i];
     }
     res[length] = 0;
     return res;
 }
-
-void stringReplace(ArrayString &str, ArrayString target, ArrayString replace)
+ArrayStringSizeByte substringSizeByte(ArrayStringSizeByte str, int start, int length)
 {
-    int stringLength = strLength(str), targetLength = strLength(target), replaceLength = strLength(replace), resLength = 0;
-    ArrayString tmpRes = new char[stringLength * replaceLength];
+    int maxLength = strLengthSizeByte(str);
+    if (start + length > maxLength) {
+        length = maxLength - start;
+    }
+    ArrayStringSizeByte res = new char[length + 2];
+    res[0] = length;
+    for (int i = start + 1; i <= start + length; i++) {
+    	res[i - start] = str[i];
+    }
+    return res;
+}
+
+void stringReplaceNullByte(ArrayStringNullByte &str, ArrayStringNullByte target, ArrayStringNullByte replace)
+{
+    int stringLength = strLengthNullByte(str), targetLength = strLengthNullByte(target), replaceLength = strLengthNullByte(replace), resLength = 0;
+    ArrayStringNullByte tmpRes = new char[stringLength * replaceLength];
 
     for (int i = 0; i < stringLength; i++) {
-        ArrayString substr = substring(str, i, targetLength);
-        if (!compareStrings(substr, target)) {
+        ArrayStringNullByte substr = substringNullByte(str, i, targetLength);
+        if (!compareStringsNullByte(substr, target)) {
             tmpRes[resLength++] = str[i];
             delete[] substr;
             continue;
@@ -99,21 +184,54 @@ void stringReplace(ArrayString &str, ArrayString target, ArrayString replace)
     }
 
     delete[] str;
-    str = substring(tmpRes, 0, resLength);
+    str = substringNullByte(tmpRes, 0, resLength);
+    delete[] tmpRes;
+}
+void stringReplaceSizeByte(ArrayStringSizeByte &str, ArrayStringSizeByte target, ArrayStringSizeByte replace)
+{
+    int stringLength = strLengthSizeByte(str), targetLength = strLengthSizeByte(target), replaceLength = strLengthSizeByte(replace), resLength = 1;
+    ArrayStringSizeByte tmpRes = new char[stringLength * replaceLength];
+    tmpRes[0] = 0;
+
+    for (int i = 1; i <= stringLength; i++) {
+        ArrayStringSizeByte substr = substringSizeByte(str, i - 1, targetLength);
+        if (!compareStringsSizeByte(substr, target)) {
+            tmpRes[resLength++] = str[i];
+            delete[] substr;
+            continue;
+        }
+
+        for (int j = 1; j <= replaceLength; j++) {
+        	tmpRes[resLength++] = replace[j];
+        }
+        i += targetLength - 1;
+        delete[] substr;
+    }
+    tmpRes[0] = resLength - 1;
+
+    delete[] str;
+    str = substringSizeByte(tmpRes, 0, resLength);
     delete[] tmpRes;
 }
 
 void demonstrateStrings4()
 {
-    /*ArrayString a = createFromString("");
-    ArrayString b = createFromString("test");
-    concatenate(a, b);
-    cout << "a:" << a << " (" << (void *)a << ")" << "\n";
-    cout << "b:" << b << " (" << (void *)b << ")" << "\n";*/
+    ArrayStringSizeByte str = createFromStringSizeByte("{_1_}Very{_1_}long{_1_}and{_1_}very{_1_}strange{_1_}word{_1_}");
+    printStringSizeByte(str);
+    cout << strLengthSizeByte(str) << "\n";
+    stringReplaceSizeByte(str, createFromStringSizeByte("{_1_}"), createFromStringSizeByte("__"));
+    printStringSizeByte(str);
+    cout << strLengthSizeByte(str) << "\n";
 
-    ArrayString str = createFromString("{_1_}Very{_1_}long{_1_}and{_1_}very{_1_}strange{_1_}word{_1_}");
-    cout << str << " (" << strLength(str) << ")" << "\n";
+    /*ArrayStringNullByte a = createFromStringNullByte("Test{_1_}");
+    ArrayStringNullByte b = createFromStringNullByte("text");
+    concatenateNullByte(a, b);
+    cout << "a: " << a << " (" << (void *)a << ")" << "\n";
+    cout << "b: " << b << " (" << (void *)b << ")" << "\n";*/
 
-    stringReplace(str, createFromString("{_1_}"), createFromString("__"));
-    cout << str << " (" << strLength(str) << ")" << "\n";
+    /*ArrayStringNullByte str = createFromStringNullByte("{_1_}Very{_1_}long{_1_}and{_1_}very{_1_}strange{_1_}word{_1_}");
+    cout << str << " (" << strLengthNullByte(str) << ")" << "\n";
+
+    stringReplaceNullByte(str, createFromStringNullByte("{_1_}"), createFromStringNullByte("__"));
+    cout << str << " (" << strLengthNullByte(str) << ")" << "\n";*/
 }
