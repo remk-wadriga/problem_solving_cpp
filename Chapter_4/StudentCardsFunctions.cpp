@@ -14,7 +14,7 @@ void printStudentCardsList(StudentCardsCollection collection)
 StudentCard* getLastStudentCard(StudentCardsCollection collection)
 {
     StudentCard* card = collection;
-    while (card->next != NULL) {
+    while (card != NULL && card->next != NULL) {
         card = card->next;
     }
     return card;
@@ -39,16 +39,33 @@ void addStudentCardRecordToStart(StudentCardsCollection &collection, int num, in
 
 void addStudentCardRecordToEnd(StudentCardsCollection &collection, int num, int grade)
 {
-    getLastStudentCard(collection)->next = createStudentCard(num, grade);
+    StudentCard* lastRecord = getLastStudentCard(collection);
+    if (lastRecord == NULL) {
+        collection = createStudentCard(num, grade);
+    } else {
+        lastRecord->next = createStudentCard(num, grade);
+    }
+}
+
+double averageStudentCardGrade(StudentCardsCollection collection)
+{
+    double sum = 0.0, count = 0.0;
+    StudentCard* card = collection;
+    while (card != NULL) {
+        sum += card->grade;
+        count++;
+        card = card->next;
+    }
+    return count > 0 ? sum / count : 0.0;
 }
 
 void demonstrateStudentsCards4()
 {
     using namespace std;
 
-    StudentCardsCollection collection;
+    StudentCardsCollection collection = NULL;
 
-    StudentCard* card1 = new StudentCard;
+    /*StudentCard* card1 = new StudentCard;
     StudentCard* card2 = new StudentCard;
     StudentCard* card3 = new StudentCard;
 
@@ -57,10 +74,12 @@ void demonstrateStudentsCards4()
     card3->num = 1003; card3->grade = 91; card3->next = NULL;
 
     collection = card1;
-    card1 = card2 = card3 = NULL;
+    card1 = card2 = card3 = NULL;*/
 
-    addStudentCardRecordToStart(collection, 1004, 75);
-    addStudentCardRecordToStart(collection, 1005, 88);
+    //addStudentCardRecordToStart(collection, 1004, 75);
+    //addStudentCardRecordToStart(collection, 1005, 88);
 
     printStudentCardsList(collection);
+
+    cout << "Average: " << averageStudentCardGrade(collection) << "\n";
 }
