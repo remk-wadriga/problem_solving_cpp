@@ -16,7 +16,6 @@ ArrayString createFromString(string str)
     return res;
 }
 
-
 int strLength(const ArrayString str)
 {
     int length = 0;
@@ -29,6 +28,20 @@ int strLength(const ArrayString str)
 char characterAt(const ArrayString str, const int pos)
 {
     return str[pos];
+}
+
+bool compareStrings(ArrayString str1, ArrayString str2)
+{
+    int strLen = strLength(str1);
+    if (strLen != strLength(str2)) {
+        return false;
+    }
+    for (int i = 0; i < strLen; i++) {
+    	if (str1[i] != str2[i]) {
+    	    return false;
+    	}
+    }
+    return true;
 }
 
 void append(ArrayString &str, const char chr)
@@ -66,6 +79,30 @@ ArrayString substring(ArrayString str, int start, int length)
     return res;
 }
 
+void stringReplace(ArrayString &str, ArrayString target, ArrayString replace)
+{
+    int stringLength = strLength(str), targetLength = strLength(target), replaceLength = strLength(replace), resLength = 0;
+    ArrayString tmpRes = new char[stringLength * replaceLength];
+
+    for (int i = 0; i < stringLength; i++) {
+        ArrayString substr = substring(str, i, targetLength);
+        if (!compareStrings(substr, target)) {
+            tmpRes[resLength++] = str[i];
+            delete[] substr;
+            continue;
+        }
+        for (int j = 0; j < replaceLength; j++) {
+            tmpRes[resLength++] = replace[j];
+        }
+        i += targetLength - 1;
+        delete[] substr;
+    }
+
+    delete[] str;
+    str = substring(tmpRes, 0, resLength);
+    delete[] tmpRes;
+}
+
 void demonstrateStrings4()
 {
     /*ArrayString a = createFromString("");
@@ -74,7 +111,9 @@ void demonstrateStrings4()
     cout << "a:" << a << " (" << (void *)a << ")" << "\n";
     cout << "b:" << b << " (" << (void *)b << ")" << "\n";*/
 
-    ArrayString str = createFromString("Very_long_string...");
-    ArrayString substr = substring(str, 1, 300);
-    cout << substr << " (" << strLength(substr) << ")" << "\n";
+    ArrayString str = createFromString("iisome wordiiii");
+    cout << str << " (" << strLength(str) << ")" << "\n";
+
+    stringReplace(str, createFromString("i"), createFromString("__000__"));
+    cout << str << " (" << strLength(str) << ")" << "\n";
 }
