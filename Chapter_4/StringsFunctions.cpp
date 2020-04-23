@@ -92,7 +92,7 @@ void stringReplace(ArrayString &str, ArrayString target, ArrayString replace)
             continue;
         }
         for (int j = 0; j < replaceLength; j++) {
-            tmpRes[resLength++] = replace[j];
+        	tmpRes[resLength++] = replace[j];
         }
         i += targetLength - 1;
         delete[] substr;
@@ -111,9 +111,9 @@ void demonstrateStrings4()
     cout << "a:" << a << " (" << (void *)a << ")" << "\n";
     cout << "b:" << b << " (" << (void *)b << ")" << "\n";*/
 
-    ArrayString str = createFromString("iisome wordiiii");
+    ArrayString str = createFromString("{_1_}Very{_1_}long{_1_}and{_1_}very{_1_}strange{_1_}word{_1_}");
     cout << str << " (" << strLength(str) << ")" << "\n";
 
-    stringReplace(str, createFromString("i"), createFromString("__000__"));
+    stringReplace(str, createFromString("{_1_}"), createFromString("__"));
     cout << str << " (" << strLength(str) << ")" << "\n";
 }
