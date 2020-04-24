@@ -28,6 +28,36 @@ ArrayStringSizeByte createFromStringSizeByte(string str)
     }
     return res;
 }
+ArrayStringList createFromStringList(string str)
+{
+    int length = str.length();
+    CharEntity* firstEntity = new CharEntity;
+    firstEntity->val = 0;
+    firstEntity->next = NULL;
+    if (length == 0) {
+        return firstEntity;
+    }
+
+    firstEntity->val = str[0];
+    CharEntity* entity = firstEntity;
+
+    for (int i = 1; i < length; i++) {
+        CharEntity* nextEntity = new CharEntity;
+        nextEntity->val = str[i];
+        nextEntity->next = NULL;
+        entity->next = nextEntity;
+        entity = nextEntity;
+    }
+
+    return firstEntity;
+}
+CharEntity* createStringEntityFromChar(char chr, CharEntity* next = NULL)
+{
+    CharEntity* entity = new CharEntity;
+    entity->val = chr;
+    entity->next = next;
+    return entity;
+}
 
 int strLengthNullByte(ArrayStringNullByte str)
 {
@@ -40,6 +70,16 @@ int strLengthNullByte(ArrayStringNullByte str)
 int strLengthSizeByte(ArrayStringSizeByte str)
 {
     return str != NULL ? str[0] : 0;
+}
+int strLengthList(ArrayStringList list)
+{
+    int size = 0;
+    CharEntity* entity = list;
+    while (entity != NULL) {
+        size++;
+        entity = entity->next;
+    }
+    return size;
 }
 
 void printStringNullByte(ArrayStringNullByte str)
@@ -56,6 +96,19 @@ void printStringSizeByte(ArrayStringSizeByte str)
     }
     cout << "\n";
 }
+void printStringList(ArrayStringList list, bool withSize = true)
+{
+    int size = 0;
+    CharEntity* entity = list;
+    while (entity != NULL) {
+        size++;
+        cout << entity->val;
+        entity = entity->next;
+    }
+    if (withSize && size > 0) {
+        cout << " (" << size << ")";
+    }
+}
 
 char characterAtNullByte(const ArrayStringNullByte str, const int pos)
 {
@@ -70,6 +123,69 @@ char characterAtSizeByte(const ArrayStringSizeByte str, const int pos)
         return 0;
     }
     return str[pos + 1];
+}
+CharEntity* entityAtList(const ArrayStringList list, const int pos)
+{
+    if (strLengthList(list) <= pos) {
+        return NULL;
+    }
+    CharEntity* entity = list;
+    if (entity == NULL) {
+        return entity;
+    }
+    int index = 0;
+    while (entity->next != NULL && index++ < pos) {
+        entity = entity->next;
+    }
+    return entity;
+}
+char characterAtList(const ArrayStringList list, const int pos)
+{
+    CharEntity* entity = entityAtList(list, pos);
+    return entity != NULL ? entity->val : 0;
+}
+
+void deleteEntityFromList(ArrayStringList &list, const int pos)
+{
+    CharEntity* currentEntity = list;
+    CharEntity* lastEntity = NULL;
+    CharEntity* firstEntity = NULL;
+
+    if (pos == 0) {
+        firstEntity = currentEntity != NULL ? currentEntity->next : NULL;
+        delete currentEntity;
+        list = firstEntity;
+        return;
+    }
+
+    int number = 0;
+    while (currentEntity != NULL && lastEntity == NULL) {
+        if (number++ == pos - 1) {
+            lastEntity = currentEntity;
+        }
+        currentEntity = currentEntity->next;
+    }
+
+    if (lastEntity == NULL || lastEntity->next == NULL) {
+        return;
+    }
+
+    currentEntity = lastEntity->next;
+    firstEntity = currentEntity->next;
+
+    lastEntity->next = firstEntity;
+    delete currentEntity;
+}
+CharEntity* getLastEntityFromList(ArrayStringList list)
+{
+    CharEntity* lastEntity = list;
+    if (lastEntity == NULL) {
+        return lastEntity;
+    }
+    while (lastEntity->next != NULL) {
+        lastEntity = lastEntity->next;
+    }
+    return lastEntity;
 }
 
 bool compareStringsNullByte(ArrayStringNullByte str1, ArrayStringNullByte str2)
@@ -98,6 +214,26 @@ bool compareStringsSizeByte(ArrayStringSizeByte str1, ArrayStringSizeByte str2)
     }
     return true;
 }
+bool compareStringsList(ArrayStringList list1, ArrayStringList list2)
+{
+    if (list1 == list2) {
+        return true;
+    }
+    int list1Length = strLengthList(list1), list2Length = strLengthList(list2);
+    if (list1Length != list2Length) {
+        return false;
+    }
+
+    for (int i = 0; i < list1Length; i++) {
+    	if (list1->val != list2->val) {
+    	    return false;
+    	}
+    	list1 = list1->next;
+    	list2 = list2->next;
+    }
+
+    return true;
+}
 
 void appendNullByte(ArrayStringNullByte &str, const char chr)
 {
@@ -123,6 +259,45 @@ void appendSizeByte(ArrayStringSizeByte &str, const char chr)
     delete[] str;
     str = newStr;
 }
+void appendList(ArrayStringList &list, const char chr)
+{
+    CharEntity* newEntity = createStringEntityFromChar(chr);
+
+    CharEntity* lastEntity = getLastEntityFromList(list);
+    if (lastEntity == NULL) {
+        list = newEntity;
+        return;
+    }
+
+    lastEntity->next = newEntity;
+}
+
+void deleteStringList(ArrayStringList &list)
+{
+    int size = strLengthList(list);
+    for (int i = size - 1; i >= 0; i--) {
+    	CharEntity* lastEntity = entityAtList(list, i);
+    	lastEntity->val = 0;
+    	lastEntity->next = NULL;
+    	delete lastEntity;
+    }
+    list = NULL;
+}
+ArrayStringList copyStringList(ArrayStringList list)
+{
+    ArrayStringList res = NULL;
+    if (list == NULL) {
+        return res;
+    }
+
+    CharEntity* entity = list;
+    appendList(res, entity->val);
+    while (entity->next != NULL) {
+        entity = entity->next;
+        appendList(res, entity->val);
+    }
+    return res;
+}
 
 void concatenateNullByte(ArrayStringNullByte &startStr, ArrayStringNullByte endStr)
 {
@@ -136,6 +311,14 @@ void concatenateSizeByte(ArrayStringSizeByte &startStr, ArrayStringSizeByte endS
     int length = strLengthSizeByte(endStr);
     for (int i = 0; i < length; i++) {
         appendSizeByte(startStr, characterAtSizeByte(endStr, i));
+    }
+}
+void concatenateList(ArrayStringList &list1, ArrayStringList list2)
+{
+    CharEntity* entity = list2;
+    while (entity != NULL) {
+        appendList(list1, entity->val);
+        entity = entity->next;
     }
 }
 
@@ -164,6 +347,28 @@ ArrayStringSizeByte substringSizeByte(ArrayStringSizeByte str, int start, int le
     	res[i - start] = str[i];
     }
     return res;
+}
+ArrayStringList substringList(ArrayStringList list, int start, int length)
+{
+    CharEntity* firstEntity = createStringEntityFromChar(0);
+    if (length == 0) {
+        return firstEntity;
+    }
+    char chr = characterAtList(list, start);
+    firstEntity->val = chr;
+
+    CharEntity* entity = firstEntity;
+    for (int i = start + 1; i < start + length && chr != 0; i++) {
+    	chr = characterAtList(list, i);
+    	if (chr == 0) {
+    	    break;
+    	}
+    	CharEntity* nextEntity = createStringEntityFromChar(chr);
+        entity->next = nextEntity;
+        entity = nextEntity;
+    }
+
+    return firstEntity;
 }
 
 void stringReplaceNullByte(ArrayStringNullByte &str, ArrayStringNullByte target, ArrayStringNullByte replace)
@@ -215,8 +420,42 @@ void stringReplaceSizeByte(ArrayStringSizeByte &str, ArrayStringSizeByte target,
     str = substringSizeByte(tmpRes, 0, resLength);
     delete[] tmpRes;
 }
+void stringReplaceList(ArrayStringList &list, ArrayStringList target, ArrayStringList replace)
+{
+    int stringLength = strLengthList(list), targetLength = strLengthList(target);
+    if (stringLength == 0) {
+        return;
+    }
+
+    ArrayStringList res = new CharEntity;
+    for (int i = 0; i < stringLength; i++) {
+    	ArrayStringList substr = substringList(list, i, targetLength);
+
+    	if (!compareStringsList(substr, target)) {
+            appendList(res, characterAtList(list, i));
+            deleteStringList(substr);
+            continue;
+    	}
+
+    	ArrayStringList replaceCopy = copyStringList(replace);
+    	concatenateList(res, replaceCopy);
+    	i += targetLength - 1;
+
+    	deleteStringList(substr);
+        deleteStringList(replaceCopy);
+    }
+
+    deleteStringList(list);
+    list = res;
+}
 
 void demonstrateStrings4()
 {
+    ArrayStringList list = createFromStringList("{_i_}Very{_i_}long{_i_}and{_i_}very{_i_}strange{_i_}string{_i_}");
+    printStringList(list); cout << "\n";
+    cout << "---------------" << "\n";
 
+    stringReplaceList(list, createFromStringList("{_i_}"), createFromStringList("__"));
+
+    printStringList(list); cout << "\n";
 }
