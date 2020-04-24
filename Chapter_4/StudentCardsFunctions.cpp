@@ -59,27 +59,58 @@ double averageStudentCardGrade(StudentCardsCollection collection)
     return count > 0 ? sum / count : 0.0;
 }
 
+void removeStudentCard(StudentCardsCollection &collection, int index)
+{
+    StudentCard* currentCard = collection;
+    StudentCard* lastCard = NULL;
+    StudentCard* firstCard = NULL;
+
+    if (index == 0) {
+        firstCard = currentCard != NULL ? currentCard->next : NULL;
+        delete currentCard;
+        collection = firstCard;
+        return;
+    }
+
+    int number = 0;
+    while (currentCard != NULL && lastCard == NULL) {
+        if (number++ == index - 1) {
+            lastCard = currentCard;
+        }
+        currentCard = currentCard->next;
+    }
+
+    if (lastCard == NULL || lastCard->next == NULL) {
+        return;
+    }
+
+    currentCard = lastCard->next;
+    firstCard = currentCard->next;
+
+    lastCard->next = firstCard;
+    delete currentCard;
+}
+
 void demonstrateStudentsCards4()
 {
     using namespace std;
 
     StudentCardsCollection collection = NULL;
 
-    /*StudentCard* card1 = new StudentCard;
+    StudentCard* card1 = new StudentCard;
     StudentCard* card2 = new StudentCard;
     StudentCard* card3 = new StudentCard;
-
     card1->num = 1001; card1->grade = 78; card1->next = card2;
     card2->num = 1002; card2->grade = 63; card2->next = card3;
     card3->num = 1003; card3->grade = 91; card3->next = NULL;
-
     collection = card1;
-    card1 = card2 = card3 = NULL;*/
-
-    //addStudentCardRecordToStart(collection, 1004, 75);
-    //addStudentCardRecordToStart(collection, 1005, 88);
+    card1 = card2 = card3 = NULL;
+    addStudentCardRecordToStart(collection, 1004, 75);
+    addStudentCardRecordToStart(collection, 1005, 88);
 
     printStudentCardsList(collection);
-
-    cout << "Average: " << averageStudentCardGrade(collection) << "\n";
+    cout << "__________" << "\n";
+    removeStudentCard(collection, 5);
+    cout << "__________" << "\n";
+    printStudentCardsList(collection);
 }
