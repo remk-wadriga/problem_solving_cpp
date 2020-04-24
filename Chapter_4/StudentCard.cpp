@@ -10,5 +10,3 @@ struct StudentCard {
         return "Num: " + to_string(num) + sep + "Grade: " + to_string(grade);
     }
 };
-
-typedef StudentCard* StudentCardsCollection;

@@ -1,10 +1,12 @@
 #include <iostream>
+#include "./CharEntity.cpp"
 
 using namespace std;
 
 // Declare new type;
 typedef char* ArrayStringNullByte;
 typedef char* ArrayStringSizeByte;
+typedef CharEntity* ArrayStringList;
 
 ArrayStringNullByte createFromStringNullByte(string str)
 {
@@ -216,22 +218,5 @@ void stringReplaceSizeByte(ArrayStringSizeByte &str, ArrayStringSizeByte target,
 
 void demonstrateStrings4()
 {
-    ArrayStringSizeByte str = createFromStringSizeByte("{_1_}Very{_1_}long{_1_}and{_1_}very{_1_}strange{_1_}word{_1_}");
-    printStringSizeByte(str);
-    cout << strLengthSizeByte(str) << "\n";
-    stringReplaceSizeByte(str, createFromStringSizeByte("{_1_}"), createFromStringSizeByte("__"));
-    printStringSizeByte(str);
-    cout << strLengthSizeByte(str) << "\n";
 
-    /*ArrayStringNullByte a = createFromStringNullByte("Test{_1_}");
-    ArrayStringNullByte b = createFromStringNullByte("text");
-    concatenateNullByte(a, b);
-    cout << "a: " << a << " (" << (void *)a << ")" << "\n";
-    cout << "b: " << b << " (" << (void *)b << ")" << "\n";*/
-
-    /*ArrayStringNullByte str = createFromStringNullByte("{_1_}Very{_1_}long{_1_}and{_1_}very{_1_}strange{_1_}word{_1_}");
-    cout << str << " (" << strLengthNullByte(str) << ")" << "\n";
-
-    stringReplaceNullByte(str, createFromStringNullByte("{_1_}"), createFromStringNullByte("__"));
-    cout << str << " (" << strLengthNullByte(str) << ")" << "\n";*/
 }

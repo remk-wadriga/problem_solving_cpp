@@ -1,6 +1,8 @@
 #include <iostream>
 #include "./StudentCard.cpp"
 
+typedef StudentCard* StudentCardsCollection;
+
 void printStudentCardsList(StudentCardsCollection collection)
 {
     int i = 1;
