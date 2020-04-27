@@ -1,3 +1,7 @@
+#include <iostream>
+
+typedef NumInList* NumList;
+
 int unsignedPow(int base, int pow)
 {
     int result = 1;
@@ -132,4 +136,22 @@ long hex2dec (std::string hex)
     }
 
     return dec;
+}
+
+NumList intToList(int base)
+{
+    NumInList* firstElem = new NumInList;
+    firstElem->val = base % 10;
+    firstElem->next = NULL;
+
+    int pervVal = base / 10;
+    while (pervVal > 0) {
+        NumInList* prevElem = new NumInList;
+        prevElem->val = pervVal % 10;
+        prevElem->next = firstElem;
+        firstElem = prevElem;
+        pervVal /= 10;
+    }
+
+    return firstElem;
 }
