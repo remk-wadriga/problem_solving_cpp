@@ -155,3 +155,26 @@ NumList intToList(int base)
 
     return firstElem;
 }
+
+NumList numListsSum(NumList list1, NumList list2)
+{
+    return intToList(list1->toInt() + list2->toInt());
+}
+
+NumList numListsSumOfNumbers(NumList list1, NumList list2)
+{
+    int res = 0;
+    NumInList* firstElem1 = list1;
+    NumInList* firstElem2 = list2;
+    while (firstElem1 != NULL || firstElem2 != NULL) {
+        res += firstElem1->val + firstElem2->val;
+        if (firstElem1 != NULL) {
+            firstElem1 = firstElem1->next;
+        }
+        if (firstElem2 != NULL) {
+            firstElem2 = firstElem2->next;
+        }
+    }
+
+    return intToList(res);
+}
