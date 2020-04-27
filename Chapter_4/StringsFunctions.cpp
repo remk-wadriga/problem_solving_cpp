@@ -82,17 +82,25 @@ int strLengthList(ArrayStringList list)
     return size;
 }
 
-void printStringNullByte(ArrayStringNullByte str)
+void printStringNullByte(ArrayStringNullByte str, bool withSize = true)
 {
-    for (int i = 0; i < strLengthNullByte(str); i++) {
+    int size = strLengthNullByte(str);
+    for (int i = 0; i < size; i++) {
     	cout << str[i];
+    }
+    if (withSize && size > 0) {
+        cout << " (" << size << ")";
     }
     cout << "\n";
 }
-void printStringSizeByte(ArrayStringSizeByte str)
+void printStringSizeByte(ArrayStringSizeByte str, bool withSize = true)
 {
+    int size = strLengthSizeByte(str);
     for (int i = 1; i <= strLengthSizeByte(str); i++) {
     	cout << str[i];
+    }
+    if (withSize && size > 0) {
+        cout << " (" << size << ")";
     }
     cout << "\n";
 }
@@ -270,6 +278,95 @@ void appendList(ArrayStringList &list, const char chr)
     }
 
     lastEntity->next = newEntity;
+}
+
+void removeCharsNullByte(ArrayStringNullByte &str, const int from, const int length)
+{
+    if (length <= 0) {
+        return;
+    }
+    int strLength = strLengthNullByte(str);
+    if (from >= strLength) {
+        return;
+    }
+
+    int resLength = strLength - (strLength - from >= length ? length : strLength - from) + 1;
+    if (resLength == 0) {
+        delete[] str;
+        str = NULL;
+        return;
+    }
+
+    ArrayStringNullByte res = new char[resLength];
+    int j = 0;
+    for (int i = 0; i < from; i++) {
+    	res[j++] = str[i];
+    }
+    for (int i = from + strLength - resLength + 1; i < strLength; i++) {
+    	res[j++] = str[i];
+    }
+    res[resLength] = 0;
+
+    delete[] str;
+    str = res;
+}
+void removeCharsSizeByte(ArrayStringSizeByte &str, const int from, const int length)
+{
+    if (length <= 0) {
+        return;
+    }
+    int strLength = strLengthSizeByte(str);
+    if (from >= strLength) {
+        return;
+    }
+
+    int resLength = strLength - (strLength - from >= length ? length : strLength - from) + 1;
+    if (resLength == 0) {
+        delete[] str;
+        str = NULL;
+        return;
+    }
+
+    ArrayStringSizeByte res = new char[resLength];
+
+    res[0] = resLength - 1;
+    int j = 1;
+    for (int i = 1; i <= from; i++) {
+    	res[j++] = str[i];
+    }
+    for (int i = from + strLength - resLength + 2; i <= strLength; i++) {
+        res[j++] = str[i];
+    }
+
+    delete[] str;
+    str = res;
+}
+void removeCharsList(ArrayStringList &list, const int from, const int length)
+{
+    if (length <= 0 || list == NULL) {
+        return;
+    }
+    CharEntity* lastEntity = list;
+    for (int i = 0; i < from - 1 && lastEntity != NULL; i++) {
+    	lastEntity = lastEntity->next;
+    }
+    if (lastEntity == NULL) {
+        return;
+    }
+
+    CharEntity* firstEntity = from > 0 ? lastEntity->next : lastEntity;
+    CharEntity* tmpEntity = firstEntity;
+    for (int i = 0; i < length && firstEntity != NULL; i++) {
+    	firstEntity = firstEntity->next;
+    	delete tmpEntity;
+    }
+    if (from > 0) {
+        lastEntity->next = firstEntity;
+    } else {
+        delete lastEntity;
+        delete list;
+        list = firstEntity;
+    }
 }
 
 void deleteStringList(ArrayStringList &list)
@@ -451,11 +548,14 @@ void stringReplaceList(ArrayStringList &list, ArrayStringList target, ArrayStrin
 
 void demonstrateStrings4()
 {
-    ArrayStringList list = createFromStringList("{_i_}Very{_i_}long{_i_}and{_i_}very{_i_}strange{_i_}string{_i_}");
-    printStringList(list); cout << "\n";
+    /*ArrayStringList list = createFromStringList("{_i_}Very{_i_}long{_i_}and{_i_}very{_i_}strange{_i_}string{_i_}");
+    printStringList(list); cout << "\n";*/
+
+    ArrayStringList str = createFromStringList("ABCDE");
+    printStringList(str); cout << "\n";
     cout << "---------------" << "\n";
 
-    stringReplaceList(list, createFromStringList("{_i_}"), createFromStringList("__"));
+    removeCharsList(str, 4, 1);
 
-    printStringList(list); cout << "\n";
+    printStringList(str); cout << "\n";
 }
