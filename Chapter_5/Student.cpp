@@ -1,8 +1,5 @@
 
 class Student {
-    const static int NUMBER_CATEGORIES = 11;
-    const std::string GRADE_LETTER[NUMBER_CATEGORIES] = {"F", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"};
-    const int LOWEST_GRADE_SCORE[NUMBER_CATEGORIES] = {0, 60, 67, 70, 73, 77, 80, 83, 87, 90, 93};
 
 public:
     Student()
@@ -60,6 +57,10 @@ public:
 
     std::string letterGrade()
     {
+        int NUMBER_CATEGORIES = 11;
+        std::string GRADE_LETTER[NUMBER_CATEGORIES] = {"F", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"};
+        int LOWEST_GRADE_SCORE[NUMBER_CATEGORIES] = {0, 60, 67, 70, 73, 77, 80, 83, 87, 90, 93};
+
         if (!isValidGrade(_grade)) {
             return "ERROR";
         }
