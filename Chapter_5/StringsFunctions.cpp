@@ -9,10 +9,13 @@ void demonstrateStrings5()
     String str2("string");
     String str3("Blablabla");
 
-    str3 = str2;
+    str1.remove(0, 4);
 
+    /*str3 = str2;
     str1.concatenate(" ");
-    str1.concatenate(str3);
+    str1.concatenate(str3);*/
+
+    str1.remove(0, 4);
 
     cout << str1.toString() << "\n";
 }

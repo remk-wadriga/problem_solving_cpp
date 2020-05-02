@@ -97,6 +97,37 @@ public:
             chr = chr->next;
         }
     }
+
+    void remove(int pos, int length)
+    {
+        using namespace std;
+        int i = 0;
+        Char* firstChar = _list;
+        if (pos > 0) {
+            while (i < pos - 1 && firstChar != NULL) {
+                firstChar = firstChar->next;
+                i++;
+            }
+        }
+        if (firstChar == NULL) {
+            return;
+        }
+
+        i = 0;
+        Char* lastChar = pos > 0 ? firstChar->next : firstChar;
+        while (i < length && lastChar != NULL) {
+            Char* tmpChar = lastChar;
+            lastChar = lastChar->next;
+            delete tmpChar;
+            i++;
+        }
+
+        firstChar->next = lastChar;
+        if (pos == 0 && lastChar == NULL) {
+            delete firstChar;
+            _list = NULL;
+        }
+    }
     // END Public methods
 private:
     struct Char {
