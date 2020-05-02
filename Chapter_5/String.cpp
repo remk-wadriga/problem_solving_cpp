@@ -76,7 +76,7 @@ public:
         Char* newChar = createFromChar(chr);
         Char* lastChar = getLastChar();
         if (lastChar == NULL) {
-            _list = newChar;
+            _list = lastChar = newChar;
         } else {
             lastChar->next = newChar;
         }
@@ -84,16 +84,30 @@ public:
 
     void concatenate(std::string str)
     {
+        Char* last = getLastChar();
         for (int i = 0; i < str.length(); i++) {
-        	appEnd(str[i]);
+            Char* newChar = createFromChar(str[i]);
+        	if (last == NULL) {
+                _list = last = newChar;
+            } else {
+                last->next = newChar;
+                last = newChar;
+            }
         }
     }
 
-    void concatenate(String str)
+    void concatenate(const String &str)
     {
         Char* chr = str._list;
+        Char* last = getLastChar();
         while (chr != NULL) {
-            appEnd(chr->val);
+            Char* newChar = createFromChar(chr->val);
+            if (last == NULL) {
+                _list = last = newChar;
+            } else {
+                last->next = newChar;
+                last = newChar;
+            }
             chr = chr->next;
         }
     }
@@ -150,8 +164,11 @@ private:
 
     Char* getLastChar()
     {
+        if (_list == NULL) {
+            return NULL;
+        }
         Char* last = _list;
-        while (last != NULL && last->next != NULL) {
+        while (last->next != NULL) {
             last = last->next;
         }
         return last;
