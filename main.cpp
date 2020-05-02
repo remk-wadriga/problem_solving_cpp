@@ -15,6 +15,7 @@ int main()
 
     Car car1("Volga", "USSA", 1975);
     cout << car1.toString() << "\n";
+    cout << "Age: " << car1.getAge() << "\n";
 
     //int* arr = generateArr(ARRAY_SIZE, 0, 10);
     //cout << arr[0] << ", " << arr[1] << ", " << arr[2] << ", ..., " << arr[ARRAY_SIZE - 3] << ", " << arr[ARRAY_SIZE - 2] << ", " << arr[ARRAY_SIZE - 1] << "\n";

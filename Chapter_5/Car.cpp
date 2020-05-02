@@ -1,3 +1,4 @@
+#include <time.h>
 
 class Car
 {
@@ -45,6 +46,14 @@ public:
     std::string toString(std::string sep = "; ")
     {
         return "Model: " + _model + sep + "Vendor: " + _vendor + sep + "Year: " + std::to_string(_year);
+    }
+
+    int getAge()
+    {
+        time_t theTime = time(NULL);
+        struct tm *aTime = localtime(&theTime);
+
+        return aTime->tm_year + 1900 - _year;
     }
     // END Public methods
 private:
