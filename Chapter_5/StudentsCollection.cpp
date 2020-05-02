@@ -88,6 +88,20 @@ public:
             record = record->next;
         }
     }
+
+    StudentsCollection recordsWithinRange(int startGrade, int endGrade)
+    {
+        StudentsCollection newCollection;
+        StudentNode* record = _list;
+        while (record != NULL) {
+            int grade = record->student.getGrade();
+            if (grade >= startGrade && grade <= endGrade) {
+                newCollection.addRecord(record->student);
+            }
+            record = record->next;
+        }
+        return newCollection;
+    }
 private:
     struct StudentNode
     {
