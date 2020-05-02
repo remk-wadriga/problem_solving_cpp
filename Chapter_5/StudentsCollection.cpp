@@ -3,14 +3,23 @@
 class StudentsCollection
 {
 public:
+    // Default constructor
     StudentsCollection()
     {
         _list = NULL;
     }
+    // Constructor for creating a copy
+    StudentsCollection(const StudentsCollection &original)
+    {
+        _list = createListCopy(original._list);
+    }
+    // Destructor
     ~StudentsCollection()
     {
         deleteList(_list);
     }
+
+    // Reload operator "=" to correct assign an object to variable with with link to another object this type
     StudentsCollection& operator=(const StudentsCollection& rhs)
     {
         if (this == &rhs) {
