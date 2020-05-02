@@ -19,11 +19,13 @@ public:
             }
         }
     }
+
     // Copying constructor
     String(const String &original)
     {
         _list = original._list;
     }
+
     // Destructor
     ~String()
     {
@@ -42,6 +44,18 @@ public:
         return *this;
     }
 
+    // Reload operator "[]" to get chars by index
+    char operator[](const int index)
+    {
+        int i = 0;
+        Char* chr = _list;
+        while (i < index && chr != NULL) {
+            chr = chr->next;
+            i++;
+        }
+        return chr != NULL ? chr->val : '0';
+    }
+
     // Public methods
     std::string toString()
     {
@@ -55,17 +69,6 @@ public:
         }
 
         return res;
-    }
-
-    char characterAt(int pos)
-    {
-        int i = 0;
-        Char* chr = _list;
-        while (i < pos && chr != NULL) {
-            chr = chr->next;
-            i++;
-        }
-        return chr->val;
     }
 
     void appEnd(char chr)
