@@ -157,11 +157,11 @@ int maxElement(int arr[], const int size)
     return maxElem;
 }
 
-int arraySum(int arr[], int size)
+int arraySum(const int* arr, int size)
 {
     // Exit condition
-    if (size == 1) {
-        return arr[0];
+    if (size == 0) {
+        return 0;
     }
     // Recursion
     return arr[--size] + arraySum(arr, size);
