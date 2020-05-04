@@ -1,26 +1,18 @@
-class IntegerItem : public InterfaceListItem
+class IntegerItem : public AbstractListItem
 {
 public:
-    IntegerItem(int val, InterfaceListItem* next = NULL)
+    IntegerItem(int val, AbstractListItem* next = NULL)
     {
-        _val = val;
-        _next = NULL;
+        setVal(val);
+        setNext(next);
     }
 
-    // Implementing Interface InterfaceListItem
-    void setNext(InterfaceListItem* nextItem)
-    {
-        _next = nextItem;
-    }
-    InterfaceListItem* getNext()
-    {
-        return _next;
-    }
+    // Implementing Interface AbstractListItem
     std::string toString()
     {
         return std::to_string(_val);
     }
-    // END Implementing Interface InterfaceListItem
+    // END Implementing Interface AbstractListItem
 
     // Getters and setters
     void setVal(int val)
@@ -34,5 +26,4 @@ public:
     // END Getters and setters
 private:
     int _val;
-    InterfaceListItem* _next;
 };

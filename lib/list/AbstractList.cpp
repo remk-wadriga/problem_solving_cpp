@@ -1,4 +1,4 @@
-#include "./InterfaceListItem.cpp"
+#include "./AbstractListItem.cpp"
 
 class AbstractList
 {
@@ -7,12 +7,12 @@ public:
     {
         _headItem = NULL;
     }
-    InterfaceListItem* getHead()
+    AbstractListItem* getHead()
     {
         return _headItem;
     }
 
-    void addFirst(InterfaceListItem* newItem)
+    void addFirst(AbstractListItem* newItem)
     {
         newItem->setNext(_headItem);
         _headItem = newItem;
@@ -21,12 +21,12 @@ public:
     void printItems(std::string sep = "\n")
     {
         using namespace std;
-        InterfaceListItem* item = _headItem;
+        AbstractListItem* item = _headItem;
         while (item != NULL) {
             cout << item->toString() << sep;
             item = item->getNext();
         }
     }
 protected:
-    InterfaceListItem* _headItem;
+    AbstractListItem* _headItem;
 };
