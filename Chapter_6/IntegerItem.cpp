@@ -12,6 +12,11 @@ public:
     {
         return std::to_string(_val);
     }
+
+    AbstractListItem* createCopy()
+    {
+        return new IntegerItem(getVal());
+    }
     // END Implementing Interface AbstractListItem
 
     // Getters and setters

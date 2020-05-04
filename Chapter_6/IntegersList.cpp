@@ -4,14 +4,17 @@
 class IntegersList : public AbstractList
 {
 public:
+    IntegersList() : AbstractList() {
+        AbstractList();
+    };
     IntegersList(int base)
     {
         IntegerItem* firstItem = new IntegerItem(base % 10);
-        addFirst(firstItem);
+        addFirstItem(firstItem);
         int pervVal = base / 10;
         while (pervVal > 0) {
             IntegerItem* prevItem = new IntegerItem(pervVal % 10, firstItem);
-            addFirst(prevItem);
+            addFirstItem(prevItem);
             firstItem = prevItem;
             pervVal /= 10;
         }
@@ -19,8 +22,7 @@ public:
 
     void add(int num)
     {
-        IntegerItem* newItem = new IntegerItem(num);
-        addFirst(newItem);
+        addLastItem(new IntegerItem(num));
     }
 
     void print(std::string sep = "")
