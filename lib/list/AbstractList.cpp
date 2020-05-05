@@ -78,7 +78,7 @@ public:
     }
 
     // Add item to the middle of list
-    void addAfterItem(AbstractListItem* newItem, int index)
+    void insertItem(AbstractListItem* newItem, int index)
     {
         int i = 0;
         AbstractListItem* beforeItem = getHead();
@@ -95,7 +95,7 @@ public:
     }
 
     // Add item to the end of list
-    void addLastItem(AbstractListItem* newItem)
+    void appendItem(AbstractListItem* newItem)
     {
         AbstractListItem* lastItem = getLastItem();
         if (lastItem == NULL) {
@@ -121,7 +121,7 @@ public:
     }
 
     // Add list to the middle
-    void addAfterList(const AbstractList* list, int index)
+    void insertList(const AbstractList* list, int index)
     {
         if (list->_headItem == NULL) {
             return;
@@ -147,7 +147,7 @@ public:
     }
 
     // Add list to the end
-    void addLastList(const AbstractList* list)
+    void appendList(const AbstractList* list)
     {
         if (list->_headItem == NULL) {
             return;
@@ -158,6 +158,52 @@ public:
             lastItem->setNext(firstItem);
         } else {
             _headItem = firstItem;
+        }
+    }
+
+    // Remove "length" from "pos" position
+    void remove(int pos, int length)
+    {
+        // 0. First position can not bo less than 0
+        if (pos < 0) {
+            pos = 0;
+        }
+
+        // 1. Get list length and check is start deleting position is correct
+        int listLength = getSize();
+        if (pos >= listLength - 1 || listLength == 0) {
+            return;
+        }
+
+        // 2. Set correct length for special cases (length == 0 - delete all after first found, length < 0 - delete all from "pos" to "lastPos" - abs(length))
+        if (length == 0) {
+            length = listLength;
+        } else if (length < 0) {
+            length = listLength + length - pos;
+        }
+
+        // 3. Find first item before deleted
+        AbstractListItem* firstItem = pos > 0 ? getHead() : NULL;
+        int i = 0;
+        while (i++ < pos - 1 && firstItem != NULL) {
+            firstItem = firstItem->getNext();
+        }
+
+        // 4. Delete "length" items after founded and find next item after deleted items
+        AbstractListItem* deleteItem = firstItem != NULL ? firstItem->getNext() : getHead();
+        AbstractListItem* nextItem = NULL;
+        i = 0;
+        while (i++ < length && deleteItem != NULL) {
+            nextItem = deleteItem->getNext();
+            delete deleteItem;
+            deleteItem = nextItem;
+        }
+
+        // 5. Set item founded in step 4 as "next" to the item founded in step 3
+        if (firstItem != NULL) {
+            firstItem->setNext(nextItem);
+        } else {
+            _headItem = nextItem;
         }
     }
 
@@ -183,6 +229,16 @@ public:
         return _currentItem = _currentItem != NULL ? _currentItem->getNext() : getHead();
     }
 
+    std::string toString()
+    {
+        std::string res = "";
+        AbstractListItem* item;
+        while ((item = getNextItem()) != NULL) {
+            res += item->toString();
+        }
+        return res;
+    }
+
     void printItems(std::string sep = "\n")
     {
         AbstractListItem* item;
@@ -190,7 +246,7 @@ public:
             std::cout << item->toString() << sep;
         }
     }
-private:
+protected:
     AbstractListItem* _headItem;
     AbstractListItem* _currentItem;
 

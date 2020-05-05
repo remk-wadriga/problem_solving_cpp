@@ -6,8 +6,7 @@
 #include "./helpers/ArrayHelper.cpp"
 #include "./helpers/StatisticsHelper.cpp"
 #include "./Chapter_5/StudentFunctions.cpp"
-#include "./lib/list/AbstractList.cpp"
-#include "./Chapter_6/IntegersList.cpp"
+#include "./lib/StringList.cpp"
 
 int main()
 {
@@ -18,27 +17,17 @@ int main()
     /*printArr(arr, ARRAY_SIZE);
     cout << arraySum(arr, ARRAY_SIZE) << "\n";*/
 
-    IntegersList list1(123);
-    IntegersList list2(78);
+    StringList string1("Test");
+    StringList string2("string");
 
-    IntegerItem* num1 = new IntegerItem(1);
-    IntegerItem* num2 = new IntegerItem(2);
-    IntegerItem* num3 = new IntegerItem(3);
-    IntegerItem* num4 = new IntegerItem(4);
-    IntegerItem* num5 = new IntegerItem(5);
-    IntegerItem* num6 = new IntegerItem(6);
-    IntegerItem* num7 = new IntegerItem(7);
+    string1.print();
+    cout << "---------------" << "\n";
 
-    list1.print();
-    //list1.addFirstList(&list2);
-    //list1.addAfterList(&list2, 1);
-    //list1.addLastList(&list2);
-    list1 = list2;
-    list2.addLastItem(new IntegerItem(3));
-    cout << "-------------------" << "\n";
-    list1.print();
-    list2.print();
-    cout << list2.getLastItem()->toString() << "\n";
+    StringList* string3 = string1.concatenate(&string2);
+    string3->insert("_", 3);
+
+    string1.print();
+    string3->print();
 
 
     //int* arr = generateArr(ARRAY_SIZE, 0, 10);

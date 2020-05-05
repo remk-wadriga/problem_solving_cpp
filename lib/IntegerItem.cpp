@@ -10,7 +10,7 @@ public:
     // Implementing Interface AbstractListItem
     std::string toString()
     {
-        return std::to_string(_val);
+        return std::to_string(getVal());
     }
 
     AbstractListItem* createCopy()
@@ -29,6 +29,7 @@ public:
         return _val;
     }
     // END Getters and setters
+
 private:
     int _val;
 };

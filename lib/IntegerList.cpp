@@ -1,13 +1,14 @@
 #include <iostream>
+#include "./list/AbstractList.cpp"
 #include "./IntegerItem.cpp"
 
-class IntegersList : public AbstractList
+class IntegerList : public AbstractList
 {
 public:
-    IntegersList() : AbstractList() {
+    IntegerList() : AbstractList() {
         AbstractList();
     };
-    IntegersList(int base)
+    IntegerList(int base)
     {
         IntegerItem* firstItem = new IntegerItem(base % 10);
         addFirstItem(firstItem);
@@ -22,7 +23,7 @@ public:
 
     void add(int num)
     {
-        addLastItem(new IntegerItem(num));
+        appendItem(new IntegerItem(num));
     }
 
     void print(std::string sep = "")
