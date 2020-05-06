@@ -33,9 +33,11 @@ public:
         insertItem(new StringItem(chr), index);
     }
     
-    void insert(std::string, int index)
+    void insert(std::string str, int index)
     {
-        
+        StringList* tmpList = new StringList(str);
+        insertList(tmpList, index);
+        delete tmpList;
     }
 
     void append(char chr)

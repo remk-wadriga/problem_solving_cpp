@@ -45,6 +45,16 @@ public:
         return item;
     }
 
+    // Get items count
+    int getSize()
+    {
+        int count = 0;
+        while (getNextItem() != NULL) {
+            count++;
+        }
+        return count;
+    }
+
     // Find item index
     int indexOfItem(AbstractListItem* item)
     {
@@ -205,16 +215,6 @@ public:
         } else {
             _headItem = nextItem;
         }
-    }
-
-    // Get items count
-    int getSize()
-    {
-        int count = 0;
-        while (getNextItem() != NULL) {
-            count++;
-        }
-        return count;
     }
 
     // Get current iterations item

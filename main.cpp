@@ -23,12 +23,6 @@ int main()
     string1.print();
     cout << "---------------" << "\n";
 
-    StringList* string3 = string1.concatenate(&string2);
-    string3->insert("_", 3);
-
-    string1.print();
-    string3->print();
-
 
     //int* arr = generateArr(ARRAY_SIZE, 0, 10);
     //cout << arr[0] << ", " << arr[1] << ", " << arr[2] << ", ..., " << arr[ARRAY_SIZE - 3] << ", " << arr[ARRAY_SIZE - 2] << ", " << arr[ARRAY_SIZE - 1] << "\n";
