@@ -73,7 +73,7 @@ public:
     // Get last item of list
     AbstractListItem* getLastItem()
     {
-        AbstractListItem* item;
+        AbstractListItem* item = NULL;
         while (getNextItem() != NULL) {
             item = getCurrentItem();
         }

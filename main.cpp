@@ -1,12 +1,8 @@
 #include <iostream>
 #include <ctime>
-#include "./structures/NumInList.cpp"
-#include "./helpers/IntegerHelper.cpp"
-#include "./helpers/StringHelper.cpp"
 #include "./helpers/ArrayHelper.cpp"
-#include "./helpers/StatisticsHelper.cpp"
-#include "./Chapter_5/StudentFunctions.cpp"
 #include "./lib/StringList.cpp"
+#include "./Chapter_6/IntegerListFunctions.cpp"
 
 int main()
 {
@@ -17,11 +13,7 @@ int main()
     /*printArr(arr, ARRAY_SIZE);
     cout << arraySum(arr, ARRAY_SIZE) << "\n";*/
 
-    StringList string1("Test");
-    StringList string2("string");
-
-    string1.print();
-    cout << "---------------" << "\n";
+    demonstrateIntegersList();
 
 
     //int* arr = generateArr(ARRAY_SIZE, 0, 10);

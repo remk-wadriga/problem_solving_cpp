@@ -20,7 +20,7 @@ public:
     void print(std::string sep = "")
     {
         printItems(sep);
-        cout << "\n";
+        std::cout << "\n";
     }
 
     void addFirst(char chr)
