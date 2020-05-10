@@ -32,6 +32,17 @@ int calculatePositiveIntegersSumRecursive(int* arr, int size)
     return calculatePositiveIntegersSumRecursive(arr, size - 1) + (arr[size - 1] > 0 ? arr[size - 1] : 0);
 }
 
+int calculatePositiveIntegersSumRecursive(IntegerList* list)
+{
+    // Exit condition
+    AbstractListItem* item = list->getNextItem();
+    if (item == NULL) {
+        return 0;
+    }
+    // Recursion
+    return calculatePositiveIntegersSumRecursive(list) + (((IntegerItem*)item)->getVal() > 0 ? ((IntegerItem*)item)->getVal() : 0);
+}
+
 bool isEvenOneBytesCountRecursive(int* arr, int size)
 {
     // Exit condition
@@ -42,24 +53,55 @@ bool isEvenOneBytesCountRecursive(int* arr, int size)
     return (isEvenOneBytesCountRecursive(arr, size - 1) + arr[size - 1]) % 2 == 0;
 }
 
+bool isEvenOneBytesCountRecursive(IntegerList* list, int count = 0)
+{
+    // Exit condition
+    AbstractListItem* item = list->getNextItem();
+    if (item == NULL) {
+        return count % 2 == 0;
+    }
+    // Recursion
+    return isEvenOneBytesCountRecursive(list, count + ((IntegerItem*)item)->getVal());
+}
+
+int countElemInArrayRecursive(int* arr, int size, int elem)
+{
+    // Exit condition
+    if (size <= 0) {
+        return 0;
+    }
+    // Recursion
+    return countElemInArrayRecursive(arr, size - 1, elem) + (arr[size - 1] == elem ? 1 : 0);
+}
+
+int countElemInArrayRecursive(IntegerList* list, int elem)
+{
+    // Exit condition
+    AbstractListItem* item = list->getNextItem();
+    if (item == NULL) {
+        return 0;
+    }
+    // Recursion
+    return countElemInArrayRecursive(list, elem) + (((IntegerItem*)item)->getVal() == elem ? 1 : 0);
+}
+
+
 void demonstrateIntegersList()
 {
     using namespace std;
 
     IntegerList list1;
     list1.add(-4);
-    list1.add(5);
-    list1.add(-1);
-    list1.add(8);
-    list1.add(-5);
-    list1.add(0);
+    list1.add(1);
+    list1.add(-2);
+    list1.add(3);
+    list1.add(-2);
 
-    /*list1.print();
-    cout << calculateNegativeIntegersRecursive(&list1) << "\n";*/
+    list1.print(" ");
+    cout << countElemInArrayRecursive(&list1, -2) << "\n";
 
-    const int ARRAY_SIZE = 5;
-    //int* arr = generateArr(ARRAY_SIZE, 0, 1);
-    int arr[ARRAY_SIZE] = {0, 1, 0, 1, 0};
+    /*const int ARRAY_SIZE = 5;
+    int arr[ARRAY_SIZE] = {3, 1, 0, 3, -3};
     printArr(arr, ARRAY_SIZE, " ", false);
-    cout << isEvenOneBytesCountRecursive(arr, ARRAY_SIZE) << "\n";
+    cout << countElemInArrayRecursive(arr, ARRAY_SIZE, 3) << "\n";*/
 }
