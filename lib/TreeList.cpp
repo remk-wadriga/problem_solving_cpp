@@ -44,6 +44,11 @@ public:
     {
         return getLeafCountRecursively(getHead());
     }
+
+    bool isHeat()
+    {
+        return isHeatRecursive(getHead());
+    }
 private:
     TreeItem* _headItem;
 
@@ -90,5 +95,22 @@ private:
         // Recursion
         int res = getLeafCountRecursively(head->left) + getLeafCountRecursively(head->right);
         return res == 0 ? 1 : res;
+    }
+
+    bool isHeatRecursive(TreeItem* head)
+    {
+        // Exit condition
+        if (head == NULL) {
+            return true;
+        }
+        // Calculation
+        if (head->left != NULL && head->left->val >= head->val) {
+            return false;
+        }
+        if (head->right != NULL && head->right->val >= head->val) {
+            return false;
+        }
+        // Recursion
+        return isHeatRecursive(head->left) && isHeatRecursive(head->right);
     }
 };
