@@ -2,6 +2,7 @@
 #include <ctime>
 #include "./helpers/ArrayHelper.cpp"
 #include "./lib/TreeList.cpp"
+#include "./lib/IntegerList.cpp"
 #include "./Chapter_6/TreeListFunctions.cpp"
 
 int main()

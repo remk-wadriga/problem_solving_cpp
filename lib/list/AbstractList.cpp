@@ -239,12 +239,19 @@ public:
         return res;
     }
 
-    void printItems(std::string sep = "\n")
+    void printItems(std::string sep = "")
     {
         AbstractListItem* item;
         while ((item = getNextItem()) != NULL) {
             std::cout << item->toString() << sep;
         }
+        std::cout << "\n";
+    }
+
+    void printItemsReverse(std::string sep = "")
+    {
+        printItemsReverseRecursive(getHead(), sep);
+        std::cout << "\n";
     }
 protected:
     AbstractListItem* _headItem;
@@ -282,5 +289,16 @@ protected:
             item = item->getNext();
             delete tmpItem;
         }
+    }
+
+    void printItemsReverseRecursive(AbstractListItem* item, std::string sep)
+    {
+        // Exit condition
+        if (item == NULL) {
+            return;
+        }
+        // Recursion
+        printItemsReverseRecursive(item->getNext(), sep);
+        std::cout << item->toString() << sep;
     }
 };

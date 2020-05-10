@@ -6,7 +6,10 @@ void demonstrateTreeList()
 {
     using namespace std;
 
-    TreeList tree1;
+    IntegerList list1(123456789);
+    list1.printItemsReverse();
+
+    /*TreeList tree1;
 
     TreeItem* item6l = new TreeItem(9);
     TreeItem* item6r = new TreeItem(12);
@@ -37,5 +40,5 @@ void demonstrateTreeList()
     tree1.print();
     cout << "-----------------" << "\n";
 
-    cout << tree1.getLeafCount() << "\n";
+    cout << tree1.getLeafCount() << "\n";*/
 }
