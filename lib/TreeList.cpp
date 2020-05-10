@@ -45,9 +45,16 @@ public:
         return getLeafCountRecursively(getHead());
     }
 
+    // Binary tree is "heat" when each node is bigger than any node in it's left and right branches
     bool isHeat()
     {
         return isHeatRecursive(getHead());
+    }
+
+    // Binary tree is "search tree" when each node is bigger than any node in it's left branch and smaller than any node in it's right branch
+    bool isSearchTree()
+    {
+        return isSearchTreeRecursive(getHead());
     }
 private:
     TreeItem* _headItem;
@@ -112,5 +119,22 @@ private:
         }
         // Recursion
         return isHeatRecursive(head->left) && isHeatRecursive(head->right);
+    }
+
+    bool isSearchTreeRecursive(TreeItem* head)
+    {
+        // Exit condition
+        if (head == NULL) {
+            return true;
+        }
+        // Calculation
+        if (head->left != NULL && head->left->val >= head->val) {
+            return false;
+        }
+        if (head->right != NULL && head->right->val <= head->val) {
+            return false;
+        }
+        // Recursion
+        return isSearchTreeRecursive(head->left) && isSearchTreeRecursive(head->right);
     }
 };
