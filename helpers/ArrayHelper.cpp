@@ -60,18 +60,52 @@ void printArr(int arr[], const int size, const std::string sep = "\n", const boo
     cout << "]\n";
 }
 
-void printArr(char arr[], const int size)
+void printArr(char arr[], const int size, const std::string sep = "\n", const bool showIndex = true)
 {
     using namespace std;
     int lastIndex = size - 1;
+    string firstWord = sep == "\n" ? "[\n" : "[";
 
-    cout << "[\n";
+    cout << firstWord;
     for (int i = 0; i < size; i++) {
-        cout << "    " << i << " => " << arr[i];
+        if (sep == "\n") {
+            cout << "    ";
+        }
+        if (showIndex) {
+            cout << i << " => ";
+        }
+        cout << arr[i];
         if (i < lastIndex) {
             cout << ",";
         }
-        cout << "\n";
+        if (sep == "\n" || i < lastIndex) {
+            cout << sep;
+        }
+    }
+    cout << "]\n";
+}
+
+void printArr(std::string arr[], const int size, const std::string sep = "\n", const bool showIndex = true)
+{
+    using namespace std;
+    int lastIndex = size - 1;
+    string firstWord = sep == "\n" ? "[\n" : "[";
+
+    cout << firstWord;
+    for (int i = 0; i < size; i++) {
+        if (sep == "\n") {
+            cout << "    ";
+        }
+        if (showIndex) {
+            cout << i << " => ";
+        }
+        cout << arr[i];
+        if (i < lastIndex) {
+            cout << ",";
+        }
+        if (sep == "\n" || i < lastIndex) {
+            cout << sep;
+        }
     }
     cout << "]\n";
 }

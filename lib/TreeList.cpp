@@ -1,5 +1,8 @@
 #include <iostream>
+#include <cmath>
+#include <vector>
 #include "./TreeItem.cpp"
+using namespace std;
 
 class TreeList
 {
@@ -20,14 +23,40 @@ public:
         return _headItem;
     }
 
-    void print(std::string sep = "")
+    void print()
     {
-        TreeItem* item = getHead();
-        while (item != NULL) {
-            std::cout << item->toString() << sep;
-            item = item->left;
+        // Get tree width and height
+        int height = getHeight();
+        int width = getLeafCount();
+
+        // Create a levels array
+        vector<string> levels[height + 1];
+        fillArrRecursive(levels, width / 2, getHead());
+
+        // Print each level
+        for (int i = 0; i < height; i++) {
+        	for (int j = 0; j < levels[i].size(); j++) {
+        		cout << levels[i][j] << " ";
+        	}
+        	cout << "\n";
         }
-        std::cout << "\n";
+    }
+
+    TreeItem* findItem(int x, int y)
+    {
+        using namespace std;
+        TreeItem* item = getHead();
+
+        if (item == NULL || (x == 0 && y == 0)) {
+            return item;
+        }
+
+        for (int i = 0; i < y && item != NULL; i++) {
+            int width = pow(i, 2);
+
+        }
+
+        return NULL;
     }
 
     int getMaxVal()
@@ -55,6 +84,11 @@ public:
     bool isSearchTree()
     {
         return isSearchTreeRecursive(getHead());
+    }
+
+    int getHeight()
+    {
+        return getHeightRecursive(getHead());
     }
 private:
     TreeItem* _headItem;
@@ -136,5 +170,36 @@ private:
         }
         // Recursion
         return isSearchTreeRecursive(head->left) && isSearchTreeRecursive(head->right);
+    }
+
+    int getHeightRecursive(TreeItem* head)
+    {
+        // Exit condition
+        if (head == NULL) {
+            return 0;
+        }
+        // Recursion
+        int leftHeight = 1 + getHeightRecursive(head->left);
+        int rightHeight = 1 + getHeightRecursive(head->right);
+        return leftHeight > rightHeight ? leftHeight : rightHeight;
+    }
+
+    void fillArrRecursive(vector<string> levels[], int spaces, TreeItem* head, int level = 0)
+    {
+        // Exit condition
+        if (head == NULL) {
+            levels[level].push_back("");
+            return;
+        }
+
+        // Add items to their levels
+        for (int i = 0; i < spaces; i++) {
+            levels[level].push_back("");
+        }
+        levels[level].push_back(head->toString());
+
+        // Recursion
+        fillArrRecursive(levels, spaces - 1, head->left, level + 1);
+        fillArrRecursive(levels, spaces - 1, head->right, level + 1);
     }
 };

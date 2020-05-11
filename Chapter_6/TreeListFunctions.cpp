@@ -24,6 +24,7 @@ void demonstrateTreeList()
 
     tree1.setHead(item1);
 
+    tree1.print();
     cout << "-----------------" << "\n";
 
     cout << "Is search tree: " << tree1.isSearchTree() << "\n";
