@@ -11,7 +11,7 @@ void demonstrateTreeList()
     TreeItem* item10 = new TreeItem(10);
     TreeItem* item9 = new TreeItem(8);
     TreeItem* item8 = new TreeItem(1);
-    TreeItem* item7 = new TreeItem(7);
+    TreeItem* item7 = new TreeItem(6);
     TreeItem* item6 = new TreeItem(3);
     // Lvl 3
     TreeItem* item5 = new TreeItem(11, item10, item11);

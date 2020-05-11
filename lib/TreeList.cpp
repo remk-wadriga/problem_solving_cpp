@@ -61,17 +61,17 @@ public:
 
     int getMaxVal()
     {
-        return getMaxValRecursively(getHead());
+        return getMaxValRecursive(getHead());
     }
 
     int getItemsCount()
     {
-        return getItemsCountRecursively(getHead());
+        return getItemsCountRecursive(getHead());
     }
 
     int getLeafCount()
     {
-        return getLeafCountRecursively(getHead());
+        return getLeafCountRecursive(getHead());
     }
 
     // Binary tree is "heat" when each node is bigger than any node in it's left and right branches
@@ -93,7 +93,7 @@ public:
 private:
     TreeItem* _headItem;
 
-    int getMaxValRecursively(TreeItem* head)
+    int getMaxValRecursive(TreeItem* head)
     {
         // Exit condition
         if (head == NULL) {
@@ -102,8 +102,8 @@ private:
 
         int max = head->val;
         // Recursion
-        int leftMax = getMaxValRecursively(head->left);
-        int rightMax = getMaxValRecursively(head->right);
+        int leftMax = getMaxValRecursive(head->left);
+        int rightMax = getMaxValRecursive(head->right);
 
         if (head->left != NULL && leftMax > max) {
             max = leftMax;
@@ -115,7 +115,7 @@ private:
         return max;
     }
 
-    int getItemsCountRecursively(TreeItem* head)
+    int getItemsCountRecursive(TreeItem* head)
     {
         // Exit condition
         if (head == NULL) {
@@ -123,10 +123,10 @@ private:
         }
 
         // Recursion
-        return 1 + getItemsCountRecursively(head->left) + getItemsCountRecursively(head->right);
+        return 1 + getItemsCountRecursive(head->left) + getItemsCountRecursive(head->right);
     }
 
-    int getLeafCountRecursively(TreeItem* head)
+    int getLeafCountRecursive(TreeItem* head)
     {
         // Exit condition
         if (head == NULL) {
@@ -134,7 +134,7 @@ private:
         }
 
         // Recursion
-        int res = getLeafCountRecursively(head->left) + getLeafCountRecursively(head->right);
+        int res = getLeafCountRecursive(head->left) + getLeafCountRecursive(head->right);
         return res == 0 ? 1 : res;
     }
 
@@ -162,12 +162,23 @@ private:
             return true;
         }
         // Calculation
-        if (head->left != NULL && head->left->val >= head->val) {
-            return false;
+        if (head->left != NULL) {
+            if (head->left->val >= head->val) {
+                return false;
+            }
+            if (getMaxValRecursive(head->left) >= head->val) {
+                return false;
+            }
         }
-        if (head->right != NULL && head->right->val <= head->val) {
-            return false;
+        if (head->right != NULL) {
+            if (head->right->val <= head->val) {
+                return false;
+            }
+            if (getMaxValRecursive(head->right) <= head->val) {
+                return false;
+            }
         }
+
         // Recursion
         return isSearchTreeRecursive(head->left) && isSearchTreeRecursive(head->right);
     }
