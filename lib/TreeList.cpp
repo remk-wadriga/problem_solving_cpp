@@ -64,6 +64,11 @@ public:
         return getMaxValRecursive(getHead());
     }
 
+    int getMinVal()
+    {
+        return getMinValRecursive(getHead());
+    }
+
     int getItemsCount()
     {
         return getItemsCountRecursive(getHead());
@@ -90,6 +95,16 @@ public:
     {
         return getHeightRecursive(getHead());
     }
+
+    TreeItem* findItemByVal(int val)
+    {
+        return findItemByValRecursive(getHead(), val);
+    }
+
+    void addToSearchTree(int val)
+    {
+        addToSearchTreeRecursive(getHead(), new TreeItem(val));
+    }
 private:
     TreeItem* _headItem;
 
@@ -99,20 +114,38 @@ private:
         if (head == NULL) {
             return 0;
         }
-
-        int max = head->val;
         // Recursion
         int leftMax = getMaxValRecursive(head->left);
         int rightMax = getMaxValRecursive(head->right);
-
-        if (head->left != NULL && leftMax > max) {
-            max = leftMax;
+        // Calculating
+        int maxVal = head->val;
+        if (head->left != NULL && leftMax > maxVal) {
+            maxVal = leftMax;
         }
-        if (head->right != NULL && rightMax > max) {
-            max = rightMax;
+        if (head->right != NULL && rightMax > maxVal) {
+            maxVal = rightMax;
         }
+        return maxVal;
+    }
 
-        return max;
+    int getMinValRecursive(TreeItem* head)
+    {
+        // Exit condition
+        if (head == NULL) {
+            return 0;
+        }
+        // Recursion
+        int leftMin = getMinValRecursive(head->left);
+        int rightMin = getMinValRecursive(head->right);
+        // Calculating
+        int minVal = head->val;
+        if (head->left != NULL && leftMin < minVal) {
+            minVal = leftMin;
+        }
+        if (head->right != NULL && rightMin < minVal) {
+            minVal = rightMin;
+        }
+        return minVal;
     }
 
     int getItemsCountRecursive(TreeItem* head)
@@ -174,7 +207,7 @@ private:
             if (head->right->val <= head->val) {
                 return false;
             }
-            if (getMaxValRecursive(head->right) <= head->val) {
+            if (getMinValRecursive(head->right) <= head->val) {
                 return false;
             }
         }
@@ -212,5 +245,58 @@ private:
         // Recursion
         fillArrRecursive(levels, spaces - 1, head->left, level + 1);
         fillArrRecursive(levels, spaces - 1, head->right, level + 1);
+    }
+
+    TreeItem* findItemByValRecursive(TreeItem* head, int val)
+    {
+        // Exit condition
+        if (head == NULL) {
+            return NULL;
+        }
+        if (head->val == val) {
+            return head;
+        }
+        // Recursion
+        TreeItem* left = findItemByValRecursive(head->left, val);
+        if (left != NULL) {
+            return left;
+        }
+        return findItemByValRecursive(head->right, val);
+    }
+
+    void addToSearchTreeRecursive(TreeItem* head, TreeItem* newVal)
+    {
+        // Exit condition
+        if (head == NULL || head->val == newVal->val) {
+            return;
+        }
+
+        if (newVal->val < head->val) {
+            if (head->left == NULL) {
+                head->left = newVal;
+            } else if (newVal->val > head->left->val) {
+                if (head->left->right != NULL && getMaxValRecursive(head->left->right) >= newVal->val) {
+                    return;
+                }
+                newVal->left = head->left;
+                head->left = newVal;
+            } else {
+                // Recursion
+                addToSearchTreeRecursive(head->left, newVal);
+            }
+        } else {
+            if (head->right == NULL) {
+                head->right = newVal;
+            } else if (newVal->val < head->right->val) {
+                if (head->right->left != NULL && getMinValRecursive(head->right->left) <= newVal->val) {
+                    return;
+                }
+                newVal->right = head->right;
+                head->right = newVal;
+            } else {
+                // Recursion
+                addToSearchTreeRecursive(head->right, newVal);
+            }
+        }
     }
 };
