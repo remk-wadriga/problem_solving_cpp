@@ -1,9 +1,9 @@
 #include <iostream>
 #include <ctime>
 #include "./helpers/ArrayHelper.cpp"
-#include "./lib/TreeList.cpp"
-#include "./lib/IntegerList.cpp"
-#include "./Chapter_6/TreeListFunctions.cpp"
+#include "./lib/list/AbstractList.cpp"
+#include "./lib/StringList.cpp"
+#include "./Chapter_7/StudentFunctions.cpp"
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
     /*printArr(arr, ARRAY_SIZE);
     cout << arraySum(arr, ARRAY_SIZE) << "\n";*/
 
-    demonstrateTreeList();
+    demonstrateStudents();
 
     //int* arr = generateArr(ARRAY_SIZE, 0, 10);
     //cout << arr[0] << ", " << arr[1] << ", " << arr[2] << ", ..., " << arr[ARRAY_SIZE - 3] << ", " << arr[ARRAY_SIZE - 2] << ", " << arr[ARRAY_SIZE - 1] << "\n";

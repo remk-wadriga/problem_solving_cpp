@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./list/AbstractList.cpp"
+//#include "./list/AbstractList.cpp"
 #include "./StringItem.cpp"
 
 class StringList : public AbstractList
@@ -8,7 +8,6 @@ public:
     StringList() : AbstractList() {
         AbstractList();
     };
-
     StringList(std::string base)
     {
         int length = base.length();
@@ -16,6 +15,27 @@ public:
             addFirstItem(new StringItem(base[i]));
         }
     }
+
+    // Implementing Interface AbstractListItem
+    bool isGraterOf(const AbstractList* rhs) override
+    {
+        AbstractListItem* lHead = getHead();
+        if (lHead == NULL) {
+            return false;
+        }
+        AbstractListItem* rHead = ((AbstractList*)rhs)->getHead();
+        while (lHead != NULL && rHead != NULL) {
+            if (*lHead > *rHead) {
+                return true;
+            } else if (*rHead > *lHead) {
+                return false;
+            }
+            lHead = lHead->getNext();
+            rHead = rHead->getNext();
+        }
+        return false;
+    }
+    // END Implementing Interface AbstractListItem
 
     void print(std::string sep = "")
     {

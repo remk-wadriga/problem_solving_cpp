@@ -28,6 +28,43 @@ public:
         return *this;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, const AbstractList& dt)
+    {
+        AbstractListItem* head = dt._headItem;
+        while (head != NULL) {
+            os << head->toString() << "";
+            head = head->getNext();
+        }
+        return os;
+    }
+
+    bool operator>(const AbstractList& rhs)
+    {
+        if (this == &rhs) {
+            return false;
+        }
+        return this->isGraterOf(&rhs);
+    }
+
+    virtual bool isGraterOf(const AbstractList* rhs)
+    {
+        AbstractListItem* lHead = this->_headItem;
+        AbstractListItem* rHead = rhs->_headItem;
+        while (lHead != NULL || rHead != NULL) {
+            if (lHead != NULL && rHead == NULL) {
+                return true;
+            }
+            if (rHead != NULL && lHead == NULL) {
+                return false;
+            }
+            if (*rHead >= *lHead) {
+                return false;
+            }
+            lHead = lHead->getNext();
+            rHead = rHead->getNext();
+        }
+        return true;
+    }
 
     AbstractListItem* getHead()
     {

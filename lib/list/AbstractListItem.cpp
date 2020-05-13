@@ -6,6 +6,26 @@ public:
 
     virtual AbstractListItem* createCopy() = 0;
 
+    bool operator>=(const AbstractListItem& rhs)
+    {
+        return this->isGraterOrEqualOf(&rhs);
+    }
+
+    bool operator>(const AbstractListItem& rhs)
+    {
+        return this->isGraterOf(&rhs);
+    }
+
+    virtual bool isGraterOrEqualOf(const AbstractListItem* rhs)
+    {
+        return false;
+    }
+
+    virtual bool isGraterOf(const AbstractListItem* rhs)
+    {
+        return false;
+    }
+
     void setNext(AbstractListItem* nextItem)
     {
         _next = nextItem;
