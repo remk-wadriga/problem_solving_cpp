@@ -4,17 +4,17 @@
 
 using namespace std;
 
-bool higherGrade(Student s1, Student s2)
+bool higherGradeFunc(Student s1, Student s2)
 {
     return s1.getGrade() > s2.getGrade();
 }
 
-bool lowerStudentNumber(Student s1, Student s2)
+bool lowerStudentNumberFunc(Student s1, Student s2)
 {
     return s1.getID() < s2.getID();
 }
 
-bool nameComesFirst(Student s1, Student s2)
+bool nameComesFirstFunc(Student s1, Student s2)
 {
     //return strcmp(s1.getName().c_str(), s2.getName().c_str()) < 0;
     return s1.getName() < s2.getName();
@@ -24,9 +24,6 @@ class SearchStudentPolicy
 {
 public:
     enum searchPolicy {BEST_GRADE, MIN_ID, FIRST_NAME};
-
-    // "firstStudentPolicy" - This is the pointer to function which search the student from list by some algorithm
-    typedef bool (* searchStudentPolicy)(Student s1, Student s2);
 
     SearchStudentPolicy()
     {
@@ -43,13 +40,13 @@ public:
     {
         switch (policy) {
             case BEST_GRADE:
-                _policy = higherGrade;
+                _policy = higherGradeFunc;
                 break;
             case MIN_ID:
-                _policy = lowerStudentNumber;
+                _policy = higherGradeFunc;
                 break;
             case FIRST_NAME:
-                _policy = nameComesFirst;
+                _policy = higherGradeFunc;
                 break;
         }
     }
@@ -72,6 +69,8 @@ public:
         return *firstRecord;
     }
 private:
+    // "firstStudentPolicy" - This is the pointer to function which search the student from list by some algorithm
+    typedef bool (*searchStudentPolicy)(Student s1, Student s2);
     Student* _head;
     searchStudentPolicy _policy;
 };
