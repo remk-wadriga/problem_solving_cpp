@@ -1,8 +1,9 @@
 #include <iostream>
-
-#include "./StudentsCollection.cpp"
+#include "./SearchStudentPolicy.cpp"
 
 using namespace std;
+
+
 
 void demonstrateStudents()
 {
@@ -17,7 +18,6 @@ void demonstrateStudents()
     Student* student7 = new Student(107, 71, "Zelensky");
     Student* student8 = new Student(108, 94, "Adam");
 
-
     collection1.add(student1);
     collection1.add(student2);
     collection1.add(student3);
@@ -27,19 +27,25 @@ void demonstrateStudents()
     collection1.add(student7);
     collection1.add(student8);
 
-    /*collection1.add(student5);
-    collection1.add(student6);*/
+    SearchStudentPolicy studentFinder;
+    studentFinder.setHead((Student*)collection1.getHead());
+    studentFinder.setPolicy(studentFinder.BEST_GRADE);
+    studentFinder.setPolicy(studentFinder.MIN_ID);
+    studentFinder.setPolicy(studentFinder.FIRST_NAME);
 
     cout << "Collection 1:" << "\n";
     collection1.print();
     cout << "---------------------------------------------------" << "\n";
 
     cout << "First student:\n";
-    Student* firstStudent = collection1.findFirstStudent(collection1.FIRST_NAME);
-    cout << firstStudent->toString() << "\n";
+    /*Student* firstStudent = collection1.findFirstStudent(collection1.FIRST_NAME);
+    cout << firstStudent->toString() << "\n";*/
+
+    Student firstStudent = studentFinder.getFirstStudent();
+    cout << firstStudent.toString() << "\n";
 
     cout << "---------------------------------------------------" << "\n";
-    collection1.print();
+    //collection1.print();
 
     cout << "\n";
 }
