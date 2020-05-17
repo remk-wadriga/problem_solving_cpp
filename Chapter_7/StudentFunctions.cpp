@@ -4,8 +4,6 @@
 
 using namespace std;
 
-
-
 void demonstrateStudents()
 {
     StudentsCollection collection1;
@@ -35,8 +33,8 @@ void demonstrateStudents()
     studentFinder.setPolicy(studentFinder.FIRST_NAME);*/
 
     cout << "Collection 1:" << "\n";
-    collection1.print();
-    cout << "---------------------------------------------------" << "\n";
+    //collection1.print();
+    //cout << "---------------------------------------------------" << "\n";
 
     /*cout << "First student:\n";
     Student* firstStudent = collection1.findFirstStudent(collection1.FIRST_NAME);
@@ -46,12 +44,14 @@ void demonstrateStudents()
     cout << firstStudent.toString() << "\n";*/
 
     Student* studentsArray = createStudentsArray(&collection1);
-    sortStudentsArrayByGradeIgnoringNullGrade(studentsArray, collection1.getSize());
+    sortStudentsArrayByGradeIgnoringNullGradeInserts(studentsArray, collection1.getSize());
     for (int i = 0; i < 8; i++) {
         cout << studentsArray[i].toString() << "\n";
     }
+    cout << "\n";
 
-    cout << "---------------------------------------------------" << "\n";
+
+    //cout << "---------------------------------------------------" << "\n";
     //collection1.print();
 
     cout << "\n";
