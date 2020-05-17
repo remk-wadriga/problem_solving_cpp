@@ -51,15 +51,11 @@ private:
     {
         Student* currentStudent;
         Student* firstStudent = getNext();
-        int bestGrade = firstStudent->getGrade();
-
         while ((currentStudent = getNext()) != NULL) {
-            if (currentStudent->getGrade() > bestGrade) {
-                bestGrade = currentStudent->getGrade();
+            if (currentStudent->getGrade() > firstStudent->getGrade()) {
                 firstStudent = currentStudent;
             }
         }
-
         return firstStudent;
     }
 
@@ -67,35 +63,23 @@ private:
     {
         Student* currentStudent;
         Student* firstStudent = getNext();
-        int minID = firstStudent->getID();
-
         while ((currentStudent = getNext()) != NULL) {
-            if (currentStudent->getID() < minID) {
-                minID = currentStudent->getID();
+            if (currentStudent->getID() < firstStudent->getID()) {
                 firstStudent = currentStudent;
             }
         }
-
         return firstStudent;
     }
 
     Student* findFirstStudentByFirstName()
     {
-        using namespace std;
-
         Student* firstStudent = getNext();
         Student* currentStudent;
-        StringList firstName(firstStudent->getName());
-
         while ((currentStudent = getNext()) != NULL) {
-            StringList currentName(currentStudent->getName());
-            //cout << firstName << " > " << currentName << " " << (firstName > currentName) << "\n";
-            if (firstName > currentName) {
-                firstName = currentName;
+            if (currentStudent->getName() < firstStudent->getName()) {
                 firstStudent = currentStudent;
             }
         }
-
         return firstStudent;
     }
 };

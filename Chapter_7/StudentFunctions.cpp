@@ -27,22 +27,22 @@ void demonstrateStudents()
     collection1.add(student7);
     collection1.add(student8);
 
-    SearchStudentPolicy studentFinder;
+    /*SearchStudentPolicy studentFinder;
     studentFinder.setHead((Student*)collection1.getHead());
     studentFinder.setPolicy(studentFinder.BEST_GRADE);
     studentFinder.setPolicy(studentFinder.MIN_ID);
-    studentFinder.setPolicy(studentFinder.FIRST_NAME);
+    studentFinder.setPolicy(studentFinder.FIRST_NAME);*/
 
     cout << "Collection 1:" << "\n";
     collection1.print();
     cout << "---------------------------------------------------" << "\n";
 
     cout << "First student:\n";
-    /*Student* firstStudent = collection1.findFirstStudent(collection1.FIRST_NAME);
-    cout << firstStudent->toString() << "\n";*/
+    Student* firstStudent = collection1.findFirstStudent(collection1.FIRST_NAME);
+    cout << firstStudent->toString() << "\n";
 
-    Student firstStudent = studentFinder.getFirstStudent();
-    cout << firstStudent.toString() << "\n";
+    /*Student firstStudent = studentFinder.getFirstStudent();
+    cout << firstStudent.toString() << "\n";*/
 
     cout << "---------------------------------------------------" << "\n";
     //collection1.print();
