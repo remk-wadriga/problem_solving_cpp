@@ -52,30 +52,25 @@ void sortStudentsArrayByGradeIgnoringNullGradeQuick(Student* students, int size)
 {
     // Create students array copy
     Student* studentsTmp = new Student[size];
+    int sortedCount = 0;
     for (int i = 0; i < size; i++) {
-    	studentsTmp[i] = students[i];
+        if (students[i].getGrade() > 0) {
+            studentsTmp[sortedCount++] = students[i];
+        }
     }
 
     // Sort tmp array
-    qsort(studentsTmp, size, sizeof(Student), compareStudentsFunction);
+    qsort(studentsTmp, sortedCount, sizeof(Student), compareStudentsFunction);
 
     // Copy students from sorted copy to unsorted array
-    int j = 0;
+    sortedCount = 0;
     for (int i = 0; i < size; i++) {
-    	Student sortedItem = studentsTmp[i];
-    	// Skip sorted students with grade == 0
-    	if (sortedItem.getGrade() == 0) {
-    	    continue;
-    	}
-    	Student unsortedItem = students[j];
-    	// Left unsorted students with grade == 0 on their old places
-    	if (unsortedItem.getGrade() == 0) {
-    	    j++; // Move unsorted index to forward
-    	    i--; // Move sorted index to backward
+    	// Skip unsorted students with grade == 0
+    	if (students[i].getGrade() == 0) {
     	    continue;
     	}
     	// Put sorted student to unsorted array
-    	students[j++] = sortedItem;
+    	students[i] = studentsTmp[sortedCount++];
     }
 }
 
