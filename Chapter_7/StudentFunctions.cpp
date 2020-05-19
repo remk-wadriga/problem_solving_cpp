@@ -44,7 +44,7 @@ void demonstrateStudents()
     cout << firstStudent.toString() << "\n";*/
 
     Student* studentsArray = createStudentsArray(&collection1);
-    sortStudentsArrayByGradeIgnoringNullGradeInserts(studentsArray, collection1.getSize());
+    sortStudentsArrayByGradeIgnoringNullGradeQuick(studentsArray, collection1.getSize());
     for (int i = 0; i < 8; i++) {
         cout << studentsArray[i].toString() << "\n";
     }
