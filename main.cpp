@@ -1,8 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include "./helpers/ArrayHelper.cpp"
-#include "./lib/list/AbstractList.cpp"
-#include "./lib/StringList.cpp"
+#include "./lib/List.cpp"
 #include "./Chapter_7/StudentFunctions.cpp"
 
 int main()

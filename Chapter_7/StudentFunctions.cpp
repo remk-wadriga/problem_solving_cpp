@@ -1,58 +1,50 @@
 #include <iostream>
-#include "./SearchStudentPolicy.cpp"
-#include "./SortStudentsArray.cpp"
+#include <list>
+#include "./Stud.cpp"
 
 using namespace std;
 
+void addStudentCardRecordToStart(list<Student> &students, int num, int grade, string name)
+{
+    students.push_front(Student(num, grade, name));
+}
+
+void addStudentCardRecordToEnd(list<Student> &students, int num, int grade, string name)
+{
+    students.push_back(Student(num, grade, name));
+}
+
+double averageStudentCardGrade(list<Student> students)
+{
+    double sum = 0.0, count = 0.0;
+    for (list<Student>::iterator it = students.begin(); it != students.end(); it++) {
+        count++;
+        sum += ((Student)*it).getGrade();
+    }
+    return count > 0 ? sum / count : 0.0;
+}
+
 void demonstrateStudents()
 {
-    StudentsCollection collection1;
+    Student student1(101, 75, "John");
+    Student student2(102, 97, "Joan");
+    Student student3(103, -1, "Jack");
+    Student student4(104, 63, "Taras");
+    Student student5(105, 98, "Olga");
+    Student student6(106, 40, "Gavriliuk");
+    Student student7(107, 71, "Zelensky");
+    Student student8(108, -1, "Adam");
 
-    Student* student1 = new Student(101, 75, "John");
-    Student* student2 = new Student(102, 97, "Joan");
-    Student* student3 = new Student(103, -1, "Jack");
-    Student* student4 = new Student(104, 63, "Taras");
-    Student* student5 = new Student(105, 98, "Olga");
-    Student* student6 = new Student(106, 40, "Gavriliuk");
-    Student* student7 = new Student(107, 71, "Zelensky");
-    Student* student8 = new Student(108, -1, "Adam");
+    Student students[] = {student1, student2, student3, student4, student5, student6, student7, student8};
+    list<Student> list1 (students, students + 8);
 
-    collection1.add(student1);
-    collection1.add(student2);
-    collection1.add(student3);
-    collection1.add(student4);
-    collection1.add(student5);
-    collection1.add(student6);
-    collection1.add(student7);
-    collection1.add(student8);
+    addStudentCardRecordToEnd(list1, 109, 67, "Vasiliy");
 
-    /*SearchStudentPolicy studentFinder;
-    studentFinder.setHead((Student*)collection1.getHead());
-    studentFinder.setPolicy(studentFinder.BEST_GRADE);
-    studentFinder.setPolicy(studentFinder.MIN_ID);
-    studentFinder.setPolicy(studentFinder.FIRST_NAME);*/
-
-    cout << "Collection 1:" << "\n";
-    //collection1.print();
-    //cout << "---------------------------------------------------" << "\n";
-
-    /*cout << "First student:\n";
-    Student* firstStudent = collection1.findFirstStudent(collection1.FIRST_NAME);
-    cout << firstStudent->toString() << "\n";*/
-
-    /*Student firstStudent = studentFinder.getFirstStudent();
-    cout << firstStudent.toString() << "\n";*/
-
-    Student* studentsArray = createStudentsArray(&collection1);
-    sortStudentsArrayByGradeIgnoringNullGradeQuick(studentsArray, collection1.getSize());
-    for (int i = 0; i < 8; i++) {
-        cout << studentsArray[i].toString() << "\n";
+    for (list<Student>::iterator it = list1.begin(); it != list1.end(); it++) {
+        cout << *it << "\n";
     }
-    cout << "\n";
 
-
-    //cout << "---------------------------------------------------" << "\n";
-    //collection1.print();
+    cout << "Avarage grade: " << averageStudentCardGrade(list1) << "\n";
 
     cout << "\n";
 }
