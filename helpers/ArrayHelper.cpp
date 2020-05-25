@@ -424,3 +424,96 @@ void gnomeSort(int arr[], const int size)
 }
 
 // <-- END Sorting algorithms -->
+
+
+// <-- Searching algorithms -->
+// 1. Определение значения элемента в середине структуры данных. Полученное значение сравнивается с ключом.
+// 2. Если ключ меньше значения середины, то поиск осуществляется в первой половине элементов, иначе — во второй.
+// 3. Поиск сводится к тому, что вновь определяется значение серединного элемента в выбранной половине и сравнивается с ключом.
+// 4. Процесс продолжается до тех пор, пока не будет найден элемент со значением ключа или не станет пустым интервал для поиска.
+
+int binarySearch(int arr[], const int lastIndex, const int elem, int firstIndex = 0)
+{
+    //using namespace std;
+
+    // 0. Calculate size
+    int size = lastIndex - firstIndex;
+
+    // Exit conditions
+    // 1. Last step when array size is 1 or less
+    if (size <= 1) {
+        return size == 1 && arr[firstIndex] == elem ? firstIndex : -1;
+    }
+    // 2. Check the middle elem
+    int middleIndex = firstIndex + size / 2;
+    if (arr[middleIndex] == elem) {
+        return middleIndex;
+    }
+    // 3. Check if searched value is between min and max values
+    if (elem < arr[firstIndex] || elem > arr[lastIndex - 1]) {
+        return -1;
+    }
+    // 4. Check if searched value is equal to min or max values
+    if (arr[firstIndex] == elem) {
+        return firstIndex;
+    }
+    if (arr[lastIndex - 1] == elem) {
+        return lastIndex - 1;
+    }
+
+    // Calculation
+    // 5. Recursive search
+    if (arr[middleIndex] > elem) {
+        return binarySearch(arr, middleIndex, elem, firstIndex);
+    } else {
+        return binarySearch(arr, middleIndex + size / 2 + 1, elem, middleIndex);
+    }
+}
+
+int interpolationSearch(int arr[], const int lastIndex, const int elem, int firstIndex = 0)
+{
+    using namespace std;
+
+    // 0. Calculate size
+    int size = lastIndex - firstIndex;
+
+    cout << "First index: " << firstIndex << "\n";
+    cout << "Last index: " << lastIndex << "\n";
+    cout << "Size: " << size << "\n";
+
+    // Exit conditions
+    // 1. Last step when array size is 1 or less
+    if (size <= 1) {
+        return size == 1 && arr[firstIndex] == elem ? firstIndex : -1;
+    }
+    // 2. Get min and max values and check if searched value is between them
+    int minVal = arr[firstIndex];
+    int maxVal = arr[lastIndex - 1];
+    if (elem < minVal || elem > maxVal) {
+        return -1;
+    }
+    // 3. Check if searched value is equal to min or max values
+    if (minVal == elem) {
+        return firstIndex;
+    }
+    if (maxVal == elem) {
+        return lastIndex - 1;
+    }
+
+    // Calculation
+    // 4. Find interpolated value index
+    int diff = maxVal - minVal;
+    int interpolatedIndex = (size / diff) * (elem - minVal) + firstIndex;
+
+
+    cout << "Min val: " << minVal << "\n";
+    cout << "Max val: " << maxVal << "\n";
+    cout << "Diff: " << diff << "\n";
+    cout << "Interpolated Index: " << interpolatedIndex << "\n";
+
+    cout << "----------\n";
+
+    return 0;
+}
+
+// <-- END Searching algorithms -->
