@@ -472,14 +472,10 @@ int binarySearch(int arr[], const int lastIndex, const int elem, int firstIndex 
 
 int interpolationSearch(int arr[], const int lastIndex, const int elem, int firstIndex = 0)
 {
-    using namespace std;
+    //using namespace std;
 
     // 0. Calculate size
     int size = lastIndex - firstIndex;
-
-    cout << "First index: " << firstIndex << "\n";
-    cout << "Last index: " << lastIndex << "\n";
-    cout << "Size: " << size << "\n";
 
     // Exit conditions
     // 1. Last step when array size is 1 or less
@@ -501,19 +497,17 @@ int interpolationSearch(int arr[], const int lastIndex, const int elem, int firs
     }
 
     // Calculation
-    // 4. Find interpolated value index
-    int diff = maxVal - minVal;
-    int interpolatedIndex = (size / diff) * (elem - minVal) + firstIndex;
-
-
-    cout << "Min val: " << minVal << "\n";
-    cout << "Max val: " << maxVal << "\n";
-    cout << "Diff: " << diff << "\n";
-    cout << "Interpolated Index: " << interpolatedIndex << "\n";
-
-    cout << "----------\n";
-
-    return 0;
+    // 4. Find interpolated value index and check if searched value is equal to value of this index
+    int interpolatedIndex = ((float)size / (float)(maxVal - minVal)) * (float)(elem - minVal) + (float)firstIndex;
+    if (elem == arr[interpolatedIndex]) {
+        return interpolatedIndex;
+    }
+    // 5. Recursive search
+    if (arr[interpolatedIndex] > elem) {
+        return interpolationSearch(arr, interpolatedIndex, elem, firstIndex);
+    } else {
+        return interpolationSearch(arr, interpolatedIndex + size / 2 + 1, elem, interpolatedIndex);
+    }
 }
 
 // <-- END Searching algorithms -->

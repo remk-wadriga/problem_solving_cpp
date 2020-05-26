@@ -59,13 +59,13 @@ void demonstrateStudents()
     	cout << students[i] << "\n";
     }*/
 
-    int arr[] = {2, 5, 6, 9, 12, 15, 17, 18, 19, 20, 27, 33, 34};
-    //           0  1  2  3  4   5   6   7   8   9   10  11  12
-    /*for (int i = 0; i < 13; i++) {
-    	cout << arr[i] << " => " << binarySearch(arr, 13, arr[i]) << "\n";
-    }*/
+    int arr[] = {2, 5, 6, 9, 12, 15, 17, 18, 19, 20, 27, 33, 34, 35, 40, 41, 45, 47, 50};
+    //           0  1  2  3  4   5   6   7   8   9   10  11  12  13  14  15  16  17  18
+    for (int i = 0; i < 19; i++) {
+    	cout << arr[i] << " => " << interpolationSearch(arr, 19, arr[i]) << "\n";
+    }
     //int arr[] = {2, 5, 6, 9, 12};
-    cout << interpolationSearch(arr, 13, 34) << "\n";
+    //cout << interpolationSearch(arr, 13, 27) << "\n";
 
     cout << "\n";
 }
