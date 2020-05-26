@@ -470,6 +470,58 @@ int binarySearch(int arr[], const int lastIndex, const int elem, int firstIndex 
     }
 }
 
+// Special function to searching functions
+int getIntValueForSearchByIndex(void* arr, const size_t elementSize, int(*getValueFunction)(void* elem), const int index)
+{
+    return getValueFunction((char*)arr + elementSize * index);
+}
+
+int binarySearchCallback(void* arr, const size_t elementSize, const int lastIndex, int(*getValueFunction)(void* elem), void* searchItem, int firstIndex = 0)
+{
+    using namespace std;
+
+    // 0. Calculate size and get searching value and min and max values
+    int size = lastIndex - firstIndex;
+    int searchVal = getValueFunction(searchItem);
+    int minVal = getIntValueForSearchByIndex(arr, elementSize, getValueFunction, firstIndex);
+    int maxVal = getIntValueForSearchByIndex(arr, elementSize, getValueFunction, lastIndex - 1);
+
+    /*cout << "searchVal: " << searchVal << "\n";
+    cout << "minVal: " << minVal << "\n";
+    cout << "maxVal: " << maxVal << "\n";*/
+
+    // Exit conditions
+    // 1. Last step when array size is 1 or less
+    if (size <= 1) {
+        return size == 1 && minVal == searchVal ? firstIndex : -1;
+    }
+    // 2. Check the middle elem
+    int middleIndex = firstIndex + size / 2;
+    int middleVal = getIntValueForSearchByIndex(arr, elementSize, getValueFunction, middleIndex);
+    if (middleVal == searchVal) {
+        return middleIndex;
+    }
+    // 3. Check if searched value is between min and max values
+    if (searchVal < minVal || searchVal > maxVal) {
+        return -1;
+    }
+    // 4. Check if searched value is equal to min or max values
+    if (minVal == searchVal) {
+        return firstIndex;
+    }
+    if (maxVal == searchVal) {
+        return lastIndex - 1;
+    }
+
+    // Calculation
+    // 5. Recursive search
+    if (middleVal > searchVal) {
+        return binarySearchCallback(arr, elementSize, middleIndex, getValueFunction, searchItem, firstIndex);
+    } else {
+        return binarySearchCallback(arr, elementSize, middleIndex + size / 2 + 1, getValueFunction, searchItem, middleIndex);
+    }
+}
+
 int interpolationSearch(int arr[], const int lastIndex, const int elem, int firstIndex = 0)
 {
     //using namespace std;
@@ -507,6 +559,48 @@ int interpolationSearch(int arr[], const int lastIndex, const int elem, int firs
         return interpolationSearch(arr, interpolatedIndex, elem, firstIndex);
     } else {
         return interpolationSearch(arr, interpolatedIndex + size / 2 + 1, elem, interpolatedIndex);
+    }
+}
+
+int interpolationSearchCallback(void* arr, const size_t elementSize, const int lastIndex, int(*getValueFunction)(void* elem), void* searchItem, int firstIndex = 0)
+{
+    //using namespace std;
+
+    // 0. Calculate size and get searching value and min and max values
+    int size = lastIndex - firstIndex;
+    int searchVal = getValueFunction(searchItem);
+    int minVal = getIntValueForSearchByIndex(arr, elementSize, getValueFunction, firstIndex);
+    int maxVal = getIntValueForSearchByIndex(arr, elementSize, getValueFunction, lastIndex - 1);
+
+    // Exit conditions
+    // 1. Last step when array size is 1 or less
+    if (size <= 1) {
+        return size == 1 && minVal == searchVal ? firstIndex : -1;
+    }
+    // 2. Get min and max values and check if searched value is between them
+    if (searchVal < minVal || searchVal > maxVal) {
+        return -1;
+    }
+    // 3. Check if searched value is equal to min or max values
+    if (minVal == searchVal) {
+        return firstIndex;
+    }
+    if (maxVal == searchVal) {
+        return lastIndex - 1;
+    }
+
+    // Calculation
+    // 4. Find interpolated value index and check if searched value is equal to value of this index
+    int interpolatedIndex = ((float)size / (float)(maxVal - minVal)) * (float)(searchVal - minVal) + (float)firstIndex;
+    int interpolatedVal = getIntValueForSearchByIndex(arr, elementSize, getValueFunction, interpolatedIndex);
+    if (interpolatedVal == searchVal) {
+        return interpolatedIndex;
+    }
+    // 5. Recursive search
+    if (interpolatedVal > searchVal) {
+        return interpolationSearchCallback(arr, elementSize, interpolatedIndex, getValueFunction, searchItem, firstIndex);
+    } else {
+        return interpolationSearchCallback(arr, elementSize, interpolatedIndex + size / 2 + 1, getValueFunction, searchItem, interpolatedIndex);
     }
 }
 
