@@ -42,23 +42,6 @@ public:
         }
     }
 
-    TreeItem* findItem(int x, int y)
-    {
-        using namespace std;
-        TreeItem* item = getHead();
-
-        if (item == NULL || (x == 0 && y == 0)) {
-            return item;
-        }
-
-        for (int i = 0; i < y && item != NULL; i++) {
-            int width = pow(i, 2);
-
-        }
-
-        return NULL;
-    }
-
     int getMaxVal()
     {
         return getMaxValRecursive(getHead());

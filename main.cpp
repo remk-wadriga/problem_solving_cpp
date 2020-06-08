@@ -2,6 +2,7 @@
 #include <ctime>
 #include "./helpers/ArrayHelper.cpp"
 #include "./lib/List.cpp"
+#include "./lib/HashMap.cpp"
 #include "./Chapter_7/StudentFunctions.cpp"
 
 int main()

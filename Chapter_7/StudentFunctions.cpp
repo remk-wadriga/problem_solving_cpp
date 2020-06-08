@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include <map>
 #include "./Stud.cpp"
 
 using namespace std;
@@ -52,31 +53,37 @@ void demonstrateStudents()
     Student student7(107, 90, "Zelensky");
     Student student8(108, 95, "Adam");
 
-    Student students[] = {student1, student2, student3, student4, student5, student6, student7, student8};
-    //Student* students[] = {&student6, &student2, &student3, &student8, &student4, &student5, &student1, &student7, &student8};
-    /*list<Student> list1 (students, students + 8);
-    addStudentCardRecordToEnd(list1, 109, 67, "Vasiliy");
-    for (list<Student>::iterator it = list1.begin(); it != list1.end(); it++) {
-        cout << *it << "\n";
-    }*/
+    /*map<string, Student> students {
+        {student1.getName(), student1},
+        {student2.getName(), student2},
+        {student3.getName(), student2},
+        {student4.getName(), student2},
+        {student5.getName(), student2},
+        {student6.getName(), student2},
+        {student7.getName(), student2},
+    };
+    students[student8.getName()] = student8;*/
 
-    for (int i = 0; i < 8; i++) {
-    	cout << students[i] << " => " << interpolationSearchCallback(students, sizeof(Student), 8, getStudentGradeFunction, &students[i]) << "\n";
-    }
-    //cout << interpolationSearchCallback(students, sizeof(Student), 8, getStudentGradeFunction, &student2) << "\n";
+    //students.getHash(student7.getName());
+    //students.getHash(student1.getName());
+    //cout << student8.getName() << " => " << students.getHash(student8.getName(), 32) << "\n";
 
-    /*sortStudentsByID(students, 8);
-    for (int i = 0; i < 8; i++) {
-    	cout << students[i] << "\n";
-    }*/
+    //cout << student8.getName() << " => " << students[student8.getName()] << "\n";
 
-    /*int arr[] = {2, 5, 6, 9, 12, 15, 17, 18, 19, 20, 27, 33, 34, 35, 40, 41, 45, 47, 50};
-    //           0  1  2  3  4   5   6   7   8   9   10  11  12  13  14  15  16  17  18
-    for (int i = 0; i < 19; i++) {
-    	cout << arr[i] << " => " << interpolationSearch(arr, 19, arr[i]) << "\n";
-    }*/
-    //int arr[] = {2, 5, 6, 9, 12};
-    //cout << interpolationSearch(arr, 13, 27) << "\n";
+    HashMap<string, Student> students;
+
+    students.add(student1.getName(), student1);
+    students.add(student2.getName(), student2);
+    students.add(student3.getName(), student3);
+    students.add(student4.getName(), student4);
+    students.add(student5.getName(), student5);
+    students.add(student6.getName(), student6);
+    students.add(student7.getName(), student7);
+    students.add(student8.getName(), student8);
+
+    cout << student7.getName() << " => " << *students.get(student7.getName()) << "\n";
+
+    //cout << student3.getName() << " => " << students.getHash(student3.getName()) << "\n";
 
     cout << "\n";
 }
