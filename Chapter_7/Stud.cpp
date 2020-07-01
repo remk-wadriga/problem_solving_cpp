@@ -1,10 +1,15 @@
 #include <iostream>
+#include "./DecorableInterface.cpp"
+#include "./StudTitle.cpp"
+#include "./StudYear.cpp"
+#include "./StudAudit.cpp"
 
-class Student
+class Student: public DecorableInterface
 {
 public:
-    Student()
+    Student(): DecorableInterface()
     {
+        DecorableInterface();
         setID(-1);
         setGrade(0);
         setName("");
@@ -27,30 +32,27 @@ public:
     }
 
     // Getters and setters
-    Student* setID(int newID)
+    void setID(int newID)
     {
         _id = newID;
-        return this;
     }
     int getID()
     {
         return _id;
     }
 
-    Student* setGrade(int newGrade)
+    void setGrade(int newGrade)
     {
         _grade = newGrade;
-        return this;
     }
     int getGrade()
     {
         return _grade;
     }
 
-    Student* setName(std::string newName)
+    void setName(std::string newName)
     {
         _name = newName;
-        return this;
     }
     std::string getName()
     {
@@ -64,6 +66,13 @@ private:
 
     friend std::string createString(const Student* stud)
     {
-        return "ID: " + std::to_string(stud->_id) + ", Name: " + stud->_name + ", Grade: " + std::to_string(stud->_grade);
+        std::string myString = "ID: " + std::to_string(stud->_id) + ", Name: " + stud->_name + ", Grade: " + std::to_string(stud->_grade);
+
+        DecorableInterface* next = ((DecorableInterface*)stud)->getNext();
+        if (next != NULL) {
+            myString += ", " + next->toString();
+        }
+
+        return myString;
     }
 };

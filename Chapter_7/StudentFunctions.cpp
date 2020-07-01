@@ -53,6 +53,16 @@ void demonstrateStudents()
     Student student7(107, 90, "Zelensky");
     Student student8(108, 95, "Adam");
 
+    StudentTitle studTitle1("Title 1");
+    StudentYear studYear1(1984);
+    StudentAudit studAudit1(false);
+
+    student1.setNext(&studTitle1);
+    studTitle1.setNext(&studYear1);
+    studYear1.setNext(&studAudit1);
+
+    cout << student1 << "\n";
+
     /*map<string, Student> students {
         {student1.getName(), student1},
         {student2.getName(), student2},
@@ -70,7 +80,7 @@ void demonstrateStudents()
 
     //cout << student8.getName() << " => " << students[student8.getName()] << "\n";
 
-    HashMap<string, Student> students;
+    /*HashMap<string, Student> students;
 
     students.add(student1.getName(), student1);
     students.add(student2.getName(), student2);
@@ -81,9 +91,7 @@ void demonstrateStudents()
     students.add(student7.getName(), student7);
     students.add(student8.getName(), student8);
 
-    cout << student7.getName() << " => " << *students.get(student7.getName()) << "\n";
-
-    //cout << student3.getName() << " => " << students.getHash(student3.getName()) << "\n";
+    cout << student7.getName() << " => " << *students.get(student7.getName()) << "\n";*/
 
     cout << "\n";
 }
