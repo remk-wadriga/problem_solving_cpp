@@ -55,11 +55,15 @@ void demonstrateStudents()
 
     StudentTitle studTitle1("Title 1");
     StudentYear studYear1(1984);
-    StudentAudit studAudit1(false);
+    StudentAudit studAudit1(true);
 
     student1.setNext(&studTitle1);
     studTitle1.setNext(&studYear1);
     studYear1.setNext(&studAudit1);
+
+    student1.addExtraField("Title_e", "Title_E 1");
+    student1.addExtraField("Year_e", 1985);
+    student1.addExtraField("Audit_e", true);
 
     cout << student1 << "\n";
 
